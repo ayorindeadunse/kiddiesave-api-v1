@@ -7,10 +7,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Optional;
 
+@Component
 public class MyUserDetailsService implements UserDetailsService {
     // inject the dependencies
     @Autowired
@@ -33,6 +35,6 @@ public class MyUserDetailsService implements UserDetailsService {
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))); //sets the role of the found user
         // consider setting separate roles for PARENT_USER and CHILD_USER to make the distinctions when both
         // user types log in.
-        
+
     }
 }
