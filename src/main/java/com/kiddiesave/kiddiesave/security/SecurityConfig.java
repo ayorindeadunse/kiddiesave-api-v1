@@ -57,8 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //create a bean here for the password encoder to encrypt the password before storing in the database
     @Bean
-    public PasswordEncoder passwordEncoder()
-    {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
