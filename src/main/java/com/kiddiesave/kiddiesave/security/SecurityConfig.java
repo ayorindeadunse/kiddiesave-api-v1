@@ -24,6 +24,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired private JWTFilter filter;
     @Autowired private MyUserDetailsService uds;
 
+    private static final String[] AUTH_WHITELIST = {
+            "/authenticate",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/v3/api-docs",
+            "/webjars/**"
+    };
     @Override
     protected void configure(HttpSecurity http) throws Exception // Method to configure your app security settings
     {
@@ -33,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeHttpRequests() //authorize incoming http requests
                 .antMatchers("/api/auth/**").permitAll() // allows auth requests to be made without authentication
                 .antMatchers("/api/user/**").hasRole("USER") //allows only users with the "USER" role to make requests to the user routes
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .and()
                 .userDetailsService(uds) //sets the user details service to the custom implementation
                 .exceptionHandling()
