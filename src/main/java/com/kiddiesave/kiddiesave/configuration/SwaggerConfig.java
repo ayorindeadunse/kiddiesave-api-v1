@@ -15,7 +15,7 @@ import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
-    public static final String AUTHORIZATION_HEADER = "Authorization";
+   // public static final String AUTHORIZATION_HEADER = "Authorization";
     private ApiInfo apiInfo()
     {
         return new ApiInfo("Kiddiesave REST API Implementation",
@@ -45,7 +45,7 @@ public class SwaggerConfig {
     // Api Key
     private ApiKey apiKey()
     {
-        return new ApiKey(AUTHORIZATION_HEADER,"JWT","header");
+        return new ApiKey("Authorization","JWT","header");
     }
 
     private SecurityContext securityContext()
@@ -54,11 +54,11 @@ public class SwaggerConfig {
                 .securityReferences(defaultAuth())
                 .build();
     }
-    List<SecurityReference> defaultAuth()
+    private List<SecurityReference> defaultAuth()
     {
         AuthorizationScope authorizationScope = new AuthorizationScope("global","accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference(AUTHORIZATION_HEADER,authorizationScopes));
+        return Arrays.asList(new SecurityReference("Authorization",authorizationScopes));
     }
 }
