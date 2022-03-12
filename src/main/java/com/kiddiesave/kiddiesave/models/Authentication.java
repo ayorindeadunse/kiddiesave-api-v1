@@ -1,4 +1,4 @@
-package com.kiddiesave.kiddiesave.entity;
+package com.kiddiesave.kiddiesave.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
