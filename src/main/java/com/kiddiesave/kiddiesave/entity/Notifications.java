@@ -1,6 +1,5 @@
 package com.kiddiesave.kiddiesave.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,15 +13,15 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
-public class User {
-    @Id // Marks the Id field as primary key and therefore the identifier of this entity.
+@ToString
+public class Notifications {
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String email;
+    private String notificationTopic;
+    private String message;
+    private String registrationToken;
 
-    //update with the rest of user properties.
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+    // Add a property of the user object and link  to it.
 }
