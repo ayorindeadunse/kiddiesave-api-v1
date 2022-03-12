@@ -1,5 +1,5 @@
 package com.kiddiesave.kiddiesave.entity;
 
-public enum userType {
-    Parent,Child
+public enum UserType {
+    PARENT,CHILD
 }
