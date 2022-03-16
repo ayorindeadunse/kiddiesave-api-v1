@@ -37,7 +37,7 @@ public class User {
     private UserType userType;
     private String notified;
     private int accessFailedCount;
-    private boolean lockedOutEnabled;
+    private boolean lockedOutEnabled; // use the methods provided for in UserDetails class for this implementation
     private String address;
     private String referralName;
     private String referralPhoneNo;
