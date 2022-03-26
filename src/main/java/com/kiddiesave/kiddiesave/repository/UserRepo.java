@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepo extends JpaRepository<User,Long> {
-Optional<User> findByEmail(String email);
+    @Query(value = "FROM User WHERE email = ?1",nativeQuery = true)
+User findByEmail(String email);
 List<User> findAll();
 
 //@Query(value = "FROM JwtUser WHERE email = ?1",nativeQuery = true) //replace with Linq query in service class
