@@ -1,5 +1,5 @@
 package com.kiddiesave.kiddiesave.entity;
 
 public enum UserType {
-    PARENT,CHILD
+    KIDDIESAVE_PARENT,KIDDIESAVE_CHILD,ROLE_ADMIN
 }
