@@ -1,27 +1,68 @@
 package com.kiddiesave.kiddiesave.security;
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
+import com.kiddiesave.kiddiesave.entity.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
-@Component // Marks this as a component. Now, Spring Boot will handle the creation and management of the JWTUtil Bean
-// and you will be able to inject it in other parts of the code
+@Service
 public class JWTUtil {
 
     // Injects the jwt-secret and jwt-issuer properties set in the resources/application.properties file
     @Value("${jwt_secret}")
     private String SECRET_KEY;
     @Value("${jwt_issuer}")
-    private String ISSUER; //replace with a url for prod
+    private String ISSUER; //host these details in GCP or AWS when it's deployed
 
-    //method to sign and create a JWT using the injected secret in application.properties file
-    public String generateToken(String email) throws IllegalArgumentException, JWTCreationException
+    public String extractUsername(String token) {return extractClaim(token, Claims::getSubject);}
+    public Date extractExpiration(String token) {return extractClaim(token, Claims::getExpiration);}
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver)
+    {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token)
+    {
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+    }
+
+    private Boolean isTokenExpired(String token) {return extractExpiration(token).before(new Date());}
+
+    public String generateToken(User user)
+    {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("firstName",user.getFirstName());
+        claims.put("lastName",user.getLastName());
+        claims.put("email",user.getEmail());
+        claims.put("address",user.getAddress());
+        claims.put("userType",user.getUserType());
+        claims.put("mobile",user.getPhoneNumberLinkedWithBvn());
+        claims.put("gender",user.getGender());
+        claims.put("dob",user.getDob());
+
+        return createToken(claims,user.getEmail());
+    }
+
+    private String createToken(Map<String, Object> claims, String subject)
+    {
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuer(ISSUER).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .signWith(SignatureAlgorithm.HS512,SECRET_KEY).compact();
+    }
+
+    public Boolean validateToken(String token, UserDetails userDetails)
+    {
+        final String username = extractUsername(token);
+        return(username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+   /* public String generateToken(String email) throws IllegalArgumentException, JWTCreationException
     {
         return JWT.create()
                 .withSubject("User Details")
@@ -29,10 +70,9 @@ public class JWTUtil {
                 .withIssuedAt(new Date())
                 .withIssuer(ISSUER)
                 .sign(Algorithm.HMAC256(SECRET_KEY));
-    }
+    }*/
 
-    // Method to verify the JWT and then decode and extract the user email stored in the payload of the token
-    public String validateTokenAndRetrieveSubject(String token)
+ /*   public String validateTokenAndRetrieveSubject(String token)
     {
         // throw parent Exception class because JWTVerificationException doesn't seem to be working
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET_KEY))
@@ -41,5 +81,8 @@ public class JWTUtil {
                 .build();
         DecodedJWT jwt = verifier.verify(token);
         return jwt.getClaim("email").asString();
-    }
+    }*/
+
+
+
 }

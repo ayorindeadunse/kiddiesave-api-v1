@@ -7,23 +7,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
+
 public class User implements UserDetails {
-    // Possibly refacotr this User class to implement/extend UserDetails so you can make use of Spring Security
+    // Possibly refactor this User class to implement/extend UserDetails so you can make use of Spring Security
     // features
     @Id // Marks the Id field as primary key and therefore the identifier of this entity.
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,6 +33,8 @@ public class User implements UserDetails {
     //update with the rest of user properties.
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    @Transient
+    private Collection<? extends GrantedAuthority> authorities;
     private String bvn;
     private String title;
     private String nin;
@@ -61,10 +64,27 @@ public class User implements UserDetails {
     private String status;
 
 
+    public User(String email, String password,
+                           Collection<? extends GrantedAuthority> authorities) {
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
+    public static User build(User user) {
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .collect(Collectors.toList());
+        return new User(
+                user.getEmail(),
+                user.getPassword(),
+                authorities);
+    }
     @JsonIgnore
     @Override
-    public Collection<GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 
     @JsonIgnore
@@ -99,5 +119,16 @@ public class User implements UserDetails {
     public boolean isEnabled()
     {
         return true;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
     }
 }

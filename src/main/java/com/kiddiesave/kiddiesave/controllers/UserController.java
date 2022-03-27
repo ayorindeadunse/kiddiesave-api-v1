@@ -19,8 +19,8 @@ public class UserController {
     public User getUserDetails()
     {
         // Retrieve the email from the security context
-        String email = (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      /*  String email = (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //Fetch and return user details
-        return userRepo.findByEmail(email).get();
+        return userRepo.findByEmail(email).get();*/
     }
 }
