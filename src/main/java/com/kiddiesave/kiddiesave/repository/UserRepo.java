@@ -3,13 +3,15 @@ package com.kiddiesave.kiddiesave.repository;
 import com.kiddiesave.kiddiesave.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface UserRepo extends JpaRepository<User,Long> {
-    @Query(value = "FROM User WHERE email = ?1",nativeQuery = true)
-User findByEmail(String email);
+    Optional<User> findByEmail(String email)
+    Boolean existsByEmail(String email);
 List<User> findAll();
 
 //@Query(value = "FROM JwtUser WHERE email = ?1",nativeQuery = true) //replace with Linq query in service class

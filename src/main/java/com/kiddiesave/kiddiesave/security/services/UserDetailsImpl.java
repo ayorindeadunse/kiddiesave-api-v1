@@ -1,4 +1,4 @@
-package com.kiddiesave.kiddiesave.security;
+package com.kiddiesave.kiddiesave.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kiddiesave.kiddiesave.entity.User;
