@@ -57,10 +57,12 @@ public class JWTUtil {
                 .signWith(SignatureAlgorithm.HS512,SECRET_KEY).compact();
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails)
+    public String validateToken(String token)
     {
         final String username = extractUsername(token);
-        return(username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        // return the username
+        return username;
+       // return(username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
    /* public String generateToken(String email) throws IllegalArgumentException, JWTCreationException
     {
