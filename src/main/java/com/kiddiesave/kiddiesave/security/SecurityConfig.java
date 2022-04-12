@@ -1,6 +1,7 @@
 package com.kiddiesave.kiddiesave.security;
 
 import com.kiddiesave.kiddiesave.repository.UserRepo;
+import com.kiddiesave.kiddiesave.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserRepo userRepo;
     @Autowired private JWTFilter filter;
-    @Autowired private MyUserDetailsService uds;
+    @Autowired private UserDetailsServiceImpl uds;
 
     private static final String[] AUTH_WHITELIST = {
             "/authenticate",
