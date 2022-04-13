@@ -13,16 +13,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepo extends JpaRepository<User,Long> {
     Optional<User> findByEmail(String email);
-List<User> findAll();
-
-//@Query(value = "FROM JwtUser WHERE email = ?1",nativeQuery = true) //replace with Linq query in service class
-//User findUserByEmail(String email);
-
-@Query(value = "FROM JwtUser WHERE bvn = ?1",nativeQuery = true) // replace with Linq query in service class
 User getUserByBvn(String bvn);
-
-@Query(value = "FROM JwtUser WHERE phoneNumberLinkedWithBvn = ?1",nativeQuery = true)
 User getUserByPhone(String mobile);
+Boolean existsByUsername(String email);
 
 // Create role
 }

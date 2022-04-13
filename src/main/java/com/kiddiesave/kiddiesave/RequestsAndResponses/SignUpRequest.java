@@ -1,10 +1,21 @@
 package com.kiddiesave.kiddiesave.RequestsAndResponses;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.Set;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class SignUpRequest {
 
     @NotBlank
@@ -24,4 +35,13 @@ public class SignUpRequest {
     private String lastName;
     @NotBlank
     private String address;
+    @NotBlank
+    private String gender;
+    private Set<String> role;
+    private String title;
+    @NotBlank
+    private String mobile;
+    @NotBlank
+    private Date dob;
+
 }

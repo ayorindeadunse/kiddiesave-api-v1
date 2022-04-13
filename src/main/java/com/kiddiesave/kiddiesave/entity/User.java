@@ -5,6 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,8 +48,8 @@ public class User {
     private String address;
     private String referralName;
     private String referralPhoneNo;
-    private String dateCreated;
-    private String dateUpdated;
+    private Date dateCreated;
+    private Date dateUpdated;
     private String deviceId;
     private String refreshToken;
     private boolean isBvnValidated;
@@ -61,4 +65,21 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    public User(String email, String password, String address, String firstName, String middleName,
+                String lastName, String gender, String bvn, String title, String phoneNumberLinkedWithBvn,
+                Date dob) {
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.bvn = bvn;
+        this.title = title;
+        this.phoneNumberLinkedWithBvn = phoneNumberLinkedWithBvn;
+        this.dob = dob;
+
+    }
 }
