@@ -98,8 +98,11 @@ public class UserService implements IUserService{
             newUser.setRoles(roles);
             newUser.setDateCreated(new Date());
             newUser.setDateUpdated(new Date());
+            newUser.setBvnValidated(true);
+            newUser.setPhoneValidated(true);
+            newUser.setStatus(true);
             userRepo.save(newUser);
-            logger.info("User successfully added.");
+            logger.info("User "+ user.getFirstName() + "  "+ "  "+user.getMiddleName() + "  "+user.getLastName() + " successfully added.");
 
             return newUser;
     }

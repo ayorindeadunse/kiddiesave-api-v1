@@ -53,12 +53,12 @@ public class User {
     private String deviceId;
     private String refreshToken;
     private boolean isBvnValidated;
-    private String isPhoneValidated;
+    private boolean isPhoneValidated;
     private boolean isPushNotifications;
     private String NotificationId;
     private String pinHash;
     private String pinSalt;
-    private String status;
+    private boolean status;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -80,6 +80,6 @@ public class User {
         this.title = title;
         this.phoneNumberLinkedWithBvn = phoneNumberLinkedWithBvn;
         this.dob = dob;
-
     }
+
 }
