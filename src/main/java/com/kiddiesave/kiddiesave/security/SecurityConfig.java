@@ -2,6 +2,7 @@ package com.kiddiesave.kiddiesave.security;
 
 import com.kiddiesave.kiddiesave.repository.UserRepo;
 import com.kiddiesave.kiddiesave.security.services.UserDetailsServiceImpl;
+import com.kiddiesave.kiddiesave.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserRepo userRepo;
     @Autowired private JWTFilter filter;
     @Autowired private UserDetailsServiceImpl uds;
+    @Autowired private UserService us;
 
     private static final String[] AUTH_WHITELIST = {
             "/authenticate",
@@ -43,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeHttpRequests() //authorize incoming http requests
                 .antMatchers("/api/auth/**").permitAll() // allows auth requests to be made without authentication
               //  .antMatchers("/api/user/**").hasRole("USER") //allows only users with the "USER" role to make requests to the user routes
+                .antMatchers("/api/user/**").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and()
