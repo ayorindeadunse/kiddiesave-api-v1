@@ -109,9 +109,10 @@ public class UserService implements IUserService{
             return newUser;
     }
     @Override
-    public User editUser(User user)
-    { // throw exception
-       User us = userRepo.getById(user.getId());
+    @Transactional
+    public User editUser(User user) throws UserNotFoundException
+    {
+        User us = userRepo.findById(user.getId()).orElseThrow(() -> new UserNotFoundException(user.getId()));
        us.setTitle(user.getTitle());
        us.setFirstName(user.getFirstName());
        us.setMiddleName(user.getMiddleName());
@@ -131,8 +132,9 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public String deleteUser(Long id) {
-      User us = userRepo.getById(id);
+    public String deleteUser(User user) throws UserNotFoundException
+    {
+        User us = userRepo.findById(user.getId()).orElseThrow(() -> new UserNotFoundException(user.getId()));
       if(us != null)
       {
           userRepo.delete(us);

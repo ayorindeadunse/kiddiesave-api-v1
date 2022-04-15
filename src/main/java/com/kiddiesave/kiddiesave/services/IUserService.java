@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface IUserService {
     User createUser(SignUpRequest user) throws UsernameNotFoundException;
-    User editUser(User user);
-    String deleteUser(Long id);
+    User editUser(User user) throws UserNotFoundException;
+    String deleteUser(User user) throws UserNotFoundException;
     Long getUsersCount();
     List<User> getAllUsers();
 }
