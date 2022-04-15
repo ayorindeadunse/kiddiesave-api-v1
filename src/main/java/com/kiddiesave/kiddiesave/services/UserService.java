@@ -146,7 +146,10 @@ public class UserService implements IUserService{
 
     @Override
     public Long getUsersCount() {
-        return null;
+       List<User> users = userRepo.findAll();
+       // count the items in the list
+        long noOfUsers = users.size();
+       return noOfUsers;
     }
 
     @Override
