@@ -109,8 +109,9 @@ public class UserService implements IUserService{
             return newUser;
     }
     @Override
-    public User editUser(Long id, User user) throws UserNotFoundException {
-       User us = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    public User editUser(User user)
+    { // throw exception
+       User us = userRepo.getById(user.getId());
        us.setTitle(user.getTitle());
        us.setFirstName(user.getFirstName());
        us.setMiddleName(user.getMiddleName());
@@ -130,11 +131,12 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public String deleteUser(Long id) throws UserNotFoundException {
-      User us = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    public String deleteUser(Long id) {
+      User us = userRepo.getById(id);
       if(us != null)
       {
           userRepo.delete(us);
+          //consider doing a safe delete by updating user status instead.
           // delete wallet?
       }
       return "user deleted successfully.";
