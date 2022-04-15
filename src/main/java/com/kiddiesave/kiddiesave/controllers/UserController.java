@@ -22,5 +22,6 @@ public class UserController {
       /*  String email = (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //Fetch and return user details
         return userRepo.findByEmail(email).get();*/
+        return null;
     }
 }

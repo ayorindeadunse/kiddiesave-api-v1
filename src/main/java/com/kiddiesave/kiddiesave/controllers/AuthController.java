@@ -1,67 +1,61 @@
 package com.kiddiesave.kiddiesave.controllers;
 
+import com.kiddiesave.kiddiesave.RequestsAndResponses.JwtResponse;
+import com.kiddiesave.kiddiesave.RequestsAndResponses.LoginRequest;
 import com.kiddiesave.kiddiesave.entity.User;
-import com.kiddiesave.kiddiesave.models.LoginCredentials;
+import com.kiddiesave.kiddiesave.repository.RoleRepo;
 import com.kiddiesave.kiddiesave.repository.UserRepo;
 import com.kiddiesave.kiddiesave.security.JWTUtil;
+import com.kiddiesave.kiddiesave.security.services.UserDetailsImpl;
+import com.kiddiesave.kiddiesave.security.services.UserDetailsServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.naming.AuthenticationException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@RestController // Marks the class a rest controller
-@RequestMapping("/api/auth") // Requests made to /api/auth/anything will be handled by this class
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RestController
+@RequestMapping("/api/auth")
 public class AuthController {
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     // injecting dependencies
     @Autowired private UserRepo userRepo;
     @Autowired private JWTUtil jwtUtil;
     @Autowired private AuthenticationManager authManager;
-    @Autowired private PasswordEncoder passwordEncoder;
 
-    // Defining the function to handle the POST route for registering a user. Remember
-    // to refactor this by using the UserService class to persist the data (separate from MyUserDetailsService
 
-    @PostMapping("/register")
-    public Map<String,Object> registerHandler(@RequestBody User user)
+    @PostMapping("/signin")
+            public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
     {
-        // Encoding Password using Bcrypt
-        String encodedPass = passwordEncoder.encode(user.getPassword());
-        // Setting the encoded password to save the data in the database
-        user.setPassword(encodedPass);
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsernameOrEmail(),
+        loginRequest.getPassword()));
 
-        // Persisting the User Entity to the H2 Database
-        user = userRepo.save(user);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+       User user = userRepo.getUserByEmail(loginRequest.getUsernameOrEmail());
+       String jwt = jwtUtil.generateToken(user);
 
-        // If successful, generate the token to send to the client
-       String token = jwtUtil.generateToken(user.getEmail());
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
 
-       // Responding with JWT
-        return Collections.singletonMap("jwt-token",token);
+        logger.info("User authenticated. Generating token...");
+        //return token with user roles
+
+        return ResponseEntity.ok(new JwtResponse(jwt,userDetails.getId(),
+                userDetails.getEmail(),
+                roles));
     }
 
-    // Defining the method to handle the POST route for logging in a user
-    @PostMapping("/login")
-    public Map<String,Object> loginHandler(@RequestBody LoginCredentials body) throws AuthenticationException {
-        // Creating the Authentication Token which will contain the credentials for authenticating
-        // This token is used as input to the authentication process
-        UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
-                body.getEmail(),body.getPassword());
-        //Authenticating the Login Credentials
-        authManager.authenticate(authInputToken);
-        // If this point is reached then it means Authentication was successful
-        // Generate the JWT
-        String token = jwtUtil.generateToken(body.getEmail());
 
-        // Respond with the JWT
-        return Collections.singletonMap("jwt-token",token);
-    }
 }
