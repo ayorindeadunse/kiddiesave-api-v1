@@ -4,6 +4,7 @@ import com.kiddiesave.kiddiesave.RequestsAndResponses.SignUpRequest;
 import com.kiddiesave.kiddiesave.entity.Role;
 import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.entity.UserType;
+import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.RoleRepo;
 import com.kiddiesave.kiddiesave.repository.UserDeviceRepo;
 import com.kiddiesave.kiddiesave.repository.UserRepo;
@@ -65,7 +66,8 @@ public class UserService implements IUserService{
                     user.getBvn(),
                     user.getTitle(),
                     user.getMobile(),
-                    user.getDob());
+                    user.getDob(),
+                    user.getCountry());
                     //set other properties
             Set<String> strRoles = user.getRole();
             Set<Role> roles = new HashSet<>();
@@ -107,13 +109,35 @@ public class UserService implements IUserService{
             return newUser;
     }
     @Override
-    public User editUser(Long id, User user) throws UsernameNotFoundException {
-        return null;
+    public User editUser(Long id, User user) throws UserNotFoundException {
+       User us = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+       us.setTitle(user.getTitle());
+       us.setFirstName(user.getFirstName());
+       us.setMiddleName(user.getMiddleName());
+       us.setLastName(user.getLastName());
+       us.setAddress(user.getAddress());
+       us.setGender(user.getGender());
+       us.setCountry(user.getCountry());
+       us.setDob(user.getDob());
+       us.setBvn(user.getBvn());
+       us.setNin(user.getNin());
+       us.setDateUpdated(new Date());
+
+     // call JPA method to update use.
+        User editedUser = userRepo.save(us);
+        logger.info("User record updated: "+ editedUser.getFirstName() + "" +editedUser.getLastName());
+        return editedUser;
     }
 
     @Override
-    public String deleteUser(Long id, User user) throws UsernameNotFoundException {
-        return null;
+    public String deleteUser(Long id) throws UserNotFoundException {
+      User us = userRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+      if(us != null)
+      {
+          userRepo.delete(us);
+          // delete wallet?
+      }
+      return "user deleted successfully.";
     }
 
     @Override

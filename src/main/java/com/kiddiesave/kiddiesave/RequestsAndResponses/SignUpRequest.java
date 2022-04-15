@@ -37,6 +37,8 @@ public class SignUpRequest {
     private String address;
     @NotBlank
     private String gender;
+    @NotBlank
+    private String country;
     private Set<String> role;
     private String title;
     @NotBlank

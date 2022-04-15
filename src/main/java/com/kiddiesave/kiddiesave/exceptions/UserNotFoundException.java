@@ -25,4 +25,8 @@ public class UserNotFoundException extends Exception{
     {
         return String.format(message);
     }
+    public String UserNotFoundException(Long userid) {
+       return String.format("The user with ", userid, "does not exist : '%s'"
+        );
+    }
 }

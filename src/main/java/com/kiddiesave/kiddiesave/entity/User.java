@@ -41,6 +41,7 @@ public class User {
     private String lastName;
     private Date dob;
     private String gender;
+    private String country;
     private UserType userType;
     private String notified;
     private int accessFailedCount;
@@ -67,7 +68,7 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     public User(String email, String password, String address, String firstName, String middleName,
-                String lastName, String gender, String bvn, String title, String phoneNumberLinkedWithBvn,
+                String lastName, String gender, String bvn, String title, String country, String phoneNumberLinkedWithBvn,
                 Date dob) {
         this.email = email;
         this.password = password;
