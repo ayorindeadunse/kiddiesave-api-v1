@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,7 +14,7 @@ import java.util.function.Function;
 public class JWTUtil {
 
     // Injects the jwt-secret and jwt-issuer properties set in the resources/application.properties file
-    @Value("${jwt_secret}")
+    @Value("${jwt_Secret}")
     private String SECRET_KEY;
     @Value("${jwt_issuer}")
     private String ISSUER; //host these details in GCP or AWS when it's deployed
@@ -42,7 +41,7 @@ public class JWTUtil {
         claims.put("lastName",user.getLastName());
         claims.put("email",user.getEmail());
         claims.put("address",user.getAddress());
-        claims.put("userType",user.getUserType());
+        claims.put("userRole",user.getRoles());
         claims.put("mobile",user.getPhoneNumberLinkedWithBvn());
         claims.put("gender",user.getGender());
         claims.put("dob",user.getDob());
@@ -50,7 +49,7 @@ public class JWTUtil {
         return createToken(claims,user.getEmail());
     }
 
-    private String createToken(Map<String, Object> claims, String subject)
+    private String createToken(Map<String, Object> claims, String subject) throws IllegalArgumentException
     {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuer(ISSUER).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
@@ -60,31 +59,12 @@ public class JWTUtil {
     public String validateToken(String token)
     {
         final String username = extractUsername(token);
-        // return the username
+       // check if token has expired
+        if(!isTokenExpired(token))
+        {
+            return "The token has expired. Please log in again to continue.";
+        }
         return username;
        // return(username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
-   /* public String generateToken(String email) throws IllegalArgumentException, JWTCreationException
-    {
-        return JWT.create()
-                .withSubject("User Details")
-                .withClaim("email",email)
-                .withIssuedAt(new Date())
-                .withIssuer(ISSUER)
-                .sign(Algorithm.HMAC256(SECRET_KEY));
-    }*/
-
- /*   public String validateTokenAndRetrieveSubject(String token)
-    {
-        // throw parent Exception class because JWTVerificationException doesn't seem to be working
-        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET_KEY))
-                .withSubject("User Details")
-                .withIssuer(ISSUER)
-                .build();
-        DecodedJWT jwt = verifier.verify(token);
-        return jwt.getClaim("email").asString();
-    }*/
-
-
-
 }

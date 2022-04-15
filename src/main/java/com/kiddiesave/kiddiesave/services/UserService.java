@@ -132,6 +132,7 @@ public class UserService implements IUserService{
     }
 
     @Override
+    @Transactional
     public String deleteUser(User user) throws UserNotFoundException
     {
         User us = userRepo.findById(user.getId()).orElseThrow(() -> new UserNotFoundException(user.getId()));
