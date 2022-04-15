@@ -154,8 +154,7 @@ public class UserService implements IUserService{
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+        List<User> users = userRepo.findAll();
+        return users;
     }
-
-    //
 }
