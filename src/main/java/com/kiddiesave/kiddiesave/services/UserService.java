@@ -127,7 +127,7 @@ public class UserService implements IUserService{
 
      // call JPA method to update use.
         User editedUser = userRepo.save(us);
-        logger.info("User record updated: "+ editedUser.getFirstName() + "" +editedUser.getLastName());
+        logger.info("User record updated: "+ editedUser.getFirstName() + "" +editedUser.getLastName()) //;
         return editedUser;
     }
 
