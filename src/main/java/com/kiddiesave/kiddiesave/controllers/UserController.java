@@ -3,7 +3,6 @@ package com.kiddiesave.kiddiesave.controllers;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ApiResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.SignUpRequest;
 import com.kiddiesave.kiddiesave.entity.User;
-import com.kiddiesave.kiddiesave.repository.UserRepo;
 import com.kiddiesave.kiddiesave.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
