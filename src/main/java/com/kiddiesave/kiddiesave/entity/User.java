@@ -14,8 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
 @ToString
 @NoArgsConstructor
 
@@ -84,4 +82,259 @@ public class User {
         this.country = country;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getBvn() {
+        return bvn;
+    }
+
+    public void setBvn(String bvn) {
+        this.bvn = bvn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getNin() {
+        return nin;
+    }
+
+    public void setNin(String nin) {
+        this.nin = nin;
+    }
+
+    public String getPhoneNumberLinkedWithBvn() {
+        return phoneNumberLinkedWithBvn;
+    }
+
+    public void setPhoneNumberLinkedWithBvn(String phoneNumberLinkedWithBvn) {
+        this.phoneNumberLinkedWithBvn = phoneNumberLinkedWithBvn;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    public String getNotified() {
+        return notified;
+    }
+
+    public void setNotified(String notified) {
+        this.notified = notified;
+    }
+
+    public int getAccessFailedCount() {
+        return accessFailedCount;
+    }
+
+    public void setAccessFailedCount(int accessFailedCount) {
+        this.accessFailedCount = accessFailedCount;
+    }
+
+    public boolean isLockedOutEnabled() {
+        return lockedOutEnabled;
+    }
+
+    public void setLockedOutEnabled(boolean lockedOutEnabled) {
+        this.lockedOutEnabled = lockedOutEnabled;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getReferralName() {
+        return referralName;
+    }
+
+    public void setReferralName(String referralName) {
+        this.referralName = referralName;
+    }
+
+    public String getReferralPhoneNo() {
+        return referralPhoneNo;
+    }
+
+    public void setReferralPhoneNo(String referralPhoneNo) {
+        this.referralPhoneNo = referralPhoneNo;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public boolean isBvnValidated() {
+        return isBvnValidated;
+    }
+
+    public void setBvnValidated(boolean bvnValidated) {
+        isBvnValidated = bvnValidated;
+    }
+
+    public boolean isPhoneValidated() {
+        return isPhoneValidated;
+    }
+
+    public void setPhoneValidated(boolean phoneValidated) {
+        isPhoneValidated = phoneValidated;
+    }
+
+    public boolean isPushNotifications() {
+        return isPushNotifications;
+    }
+
+    public void setPushNotifications(boolean pushNotifications) {
+        isPushNotifications = pushNotifications;
+    }
+
+    public String getNotificationId() {
+        return NotificationId;
+    }
+
+    public void setNotificationId(String notificationId) {
+        NotificationId = notificationId;
+    }
+
+    public String getPinHash() {
+        return pinHash;
+    }
+
+    public void setPinHash(String pinHash) {
+        this.pinHash = pinHash;
+    }
+
+    public String getPinSalt() {
+        return pinSalt;
+    }
+
+    public void setPinSalt(String pinSalt) {
+        this.pinSalt = pinSalt;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }

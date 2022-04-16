@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -46,6 +47,7 @@ public class UserService implements IUserService{
         this.roleRepo = roleRepo;
     }
     @Override
+    @Transactional
     public User createUser(SignUpRequest user) throws UsernameNotFoundException {
         //return null;
             // check if user exists in database
@@ -55,19 +57,20 @@ public class UserService implements IUserService{
                 //
                 //throw user exists exception (add that to exception class)
             }
+
             //alternate course of action, validate bvn and use that to fetch fields to register user;
             User newUser = new User(user.getEmail(),
                     passwordEncoder.encode(user.getPassword()),
-                    user.getAddress(),
+                    user.getBvn(),
                     user.getFirstName(),
                     user.getMiddleName(),
                     user.getLastName(),
-                    user.getGender(),
-                    user.getBvn(),
+                    user.getAddress(),
+                    user.getGender(),user.getCountry(),
                     user.getTitle(),
                     user.getMobile(),
-                    user.getDob(),
-                    user.getCountry());
+                    user.getDob());
+
                     //set other properties
             Set<String> strRoles = user.getRole();
             Set<Role> roles = new HashSet<>();
@@ -146,6 +149,7 @@ public class UserService implements IUserService{
     }
 
     @Override
+    @Transactional
     public Long getUsersCount() {
        List<User> users = userRepo.findAll();
        // count the items in the list
@@ -154,6 +158,7 @@ public class UserService implements IUserService{
     }
 
     @Override
+    @Transactional
     public List<User> getAllUsers() {
         List<User> users = userRepo.findAll();
         return users;

@@ -14,7 +14,7 @@ import java.util.function.Function;
 public class JWTUtil {
 
     // Injects the jwt-secret and jwt-issuer properties set in the resources/application.properties file
-    @Value("${jwt_Secret}")
+    @Value("${jwt_secret}")
     private String SECRET_KEY;
     @Value("${jwt_issuer}")
     private String ISSUER; //host these details in GCP or AWS when it's deployed
