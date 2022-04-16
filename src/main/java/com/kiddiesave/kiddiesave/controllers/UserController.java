@@ -16,8 +16,6 @@ import javax.validation.Valid;
 public class UserController {
     // Inject dependencies
     @Autowired
-    private UserRepo userRepo;
-    @Autowired
     private UserService userService;
 
     @PostMapping("/signup")

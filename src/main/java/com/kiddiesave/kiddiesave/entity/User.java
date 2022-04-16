@@ -81,6 +81,7 @@ public class User {
         this.title = title;
         this.phoneNumberLinkedWithBvn = phoneNumberLinkedWithBvn;
         this.dob = dob;
+        this.country = country;
     }
 
 }
