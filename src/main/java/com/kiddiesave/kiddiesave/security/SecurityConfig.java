@@ -21,11 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //Inject dependencies
-    @Autowired
-    private UserRepo userRepo;
     @Autowired private JWTFilter filter;
     @Autowired private UserDetailsServiceImpl uds;
-    @Autowired private UserService us;
 
     private static final String[] AUTH_WHITELIST = {
             "/authenticate",

@@ -15,9 +15,9 @@ public interface UserRepo extends JpaRepository<User,Long> {
     Optional<User> findByEmail(String email);
     //remember to add the database queries
     User getUserByEmail(String email);
-    User getUserByBvn(String bvn);
-    User getUserByPhone(String mobile);
-    Boolean existsByUsername(String email);
+   // User getUserByBvn(String bvn);
+   // User getUserByPhone(String mobile);
+   // Boolean existsByUsername(String email);
 
 // Create role
 }

@@ -32,18 +32,17 @@ public class UserService implements IUserService{
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
     private WalletRepo walletRepo;
     private PasswordEncoder passwordEncoder;
-    private UserDeviceRepo userDeviceRepo;
     private RoleRepo roleRepo;
 
-    public UserService(UserRepo userRepo,WalletRepo walletRepo,PasswordEncoder passwordEncoder,UserDeviceRepo userDeviceRepo,
+    public UserService(UserRepo userRepo,WalletRepo walletRepo,PasswordEncoder passwordEncoder,
                        RoleRepo roleRepo)
     {
         this.userRepo = userRepo;
         this.walletRepo = walletRepo;
         this.passwordEncoder = passwordEncoder;
-        this.userDeviceRepo = userDeviceRepo;
         this.roleRepo = roleRepo;
     }
     @Override
@@ -51,7 +50,9 @@ public class UserService implements IUserService{
     public User createUser(SignUpRequest user) throws UsernameNotFoundException {
         //return null;
             // check if user exists in database
-            if(userRepo.existsByUsername(user.getEmail()))
+          //  if(userRepo.existsByUsername(user.getEmail()))
+        User usr = userRepo.getUserByEmail(user.getEmail());
+        if(usr != null)
             {
                 // user already exists, send as response to client
                 //
