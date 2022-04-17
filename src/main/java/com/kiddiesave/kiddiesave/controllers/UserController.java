@@ -24,7 +24,9 @@ public class UserController {
             // consider sending a token to the client so frontend can use as logic to send user to dashboard.
             return ResponseEntity.ok(new ApiResponse(true, "User registered successfully!",user));
         } else {
-            return null;
+           // return null; //return failure with an error response
+            return ResponseEntity.ok(new ApiResponse(false,"User registration failed",null));// or return
+            // the stack trace.
         }
     }
 }
