@@ -45,6 +45,7 @@ public class JWTUtil {
         claims.put("mobile",user.getPhoneNumberLinkedWithBvn());
         claims.put("gender",user.getGender());
         claims.put("dob",user.getDob());
+        claims.put("title",user.getTitle());
 
         return createToken(claims,user.getEmail());
     }

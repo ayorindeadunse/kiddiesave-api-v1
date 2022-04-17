@@ -47,6 +47,8 @@ public class Claims {
                     claimsResponse.setMobile(user.getPhoneNumberLinkedWithBvn());
                     claimsResponse.setGender(user.getGender());
                     claimsResponse.setEmail(user.getEmail());
+                    claimsResponse.setTitle(user.getTitle());
+                    claimsResponse.setCountry(user.getCountry());
                 }
             }
         }

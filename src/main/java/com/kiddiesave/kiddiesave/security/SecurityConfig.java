@@ -1,8 +1,6 @@
 package com.kiddiesave.kiddiesave.security;
 
-import com.kiddiesave.kiddiesave.repository.UserRepo;
 import com.kiddiesave.kiddiesave.security.services.UserDetailsServiceImpl;
-import com.kiddiesave.kiddiesave.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

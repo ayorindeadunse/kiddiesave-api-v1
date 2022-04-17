@@ -24,4 +24,6 @@ public class ClaimsResponse {
     private String bvn;
     private String gender;
     private Date dob;
+    private String title;
+    private String country;
 }

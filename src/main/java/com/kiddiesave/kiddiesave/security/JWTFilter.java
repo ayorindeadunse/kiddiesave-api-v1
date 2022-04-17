@@ -1,6 +1,5 @@
 package com.kiddiesave.kiddiesave.security;
 
-import antlr.StringUtils;
 import com.kiddiesave.kiddiesave.security.services.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
