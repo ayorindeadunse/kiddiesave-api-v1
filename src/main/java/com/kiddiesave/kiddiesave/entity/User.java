@@ -43,7 +43,7 @@ public class User {
     private UserType userType;
     private String notified;
     private int accessFailedCount;
-   private boolean lockedOutEnabled;
+    private boolean lockedOutEnabled;
     private String address;
     private String referralName;
     private String referralPhoneNo;
