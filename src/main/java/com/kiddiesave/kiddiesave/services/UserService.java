@@ -54,7 +54,8 @@ public class UserService implements IUserService{
                     user.getMiddleName(),
                     user.getLastName(),
                     user.getAddress(),
-                    user.getGender(),user.getCountry(),
+                    user.getGender(),
+                    user.getCountry(),
                     user.getTitle(),
                     user.getMobile(),
                     user.getDob());
