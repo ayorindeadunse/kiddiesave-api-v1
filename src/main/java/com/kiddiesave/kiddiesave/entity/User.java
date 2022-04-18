@@ -34,7 +34,6 @@ public class User {
     private Date dob;
     private String gender;
     private String country;
-    private UserType userType;
     private String notified;
     private int accessFailedCount;
     private boolean lockedOutEnabled;
@@ -177,14 +176,6 @@ public class User {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public UserType getUserType() {
-        return userType;
-    }
-
-    public void setUserType(UserType userType) {
-        this.userType = userType;
     }
 
     public String getNotified() {
