@@ -61,6 +61,7 @@ public class Claims {
         String bearerToken = request.getHeader("Authorization");
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer"))
         {
+            // remember to add the call to validate the token.
             jwt = bearerToken.substring(7,bearerToken.length());
                 username = jwtUtil.extractUsername(jwt);
                 if(username != null && SecurityContextHolder.getContext().getAuthentication().getPrincipal() != null)
