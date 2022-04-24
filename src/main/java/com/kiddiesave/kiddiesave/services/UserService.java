@@ -149,11 +149,4 @@ public class UserService implements IUserService{
         long noOfUsers = users.size();
        return noOfUsers;
     }
-
-    @Override
-    @Transactional
-    public List<User> getAllUsers() {
-        List<User> users = userRepo.findAll();
-        return users;
-    }
 }
