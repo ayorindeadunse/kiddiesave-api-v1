@@ -81,4 +81,17 @@ public class UserController {
         return new ResponseEntity(new ApiResponse(false, "An Error occurred on the server!", HttpStatus.INTERNAL_SERVER_ERROR),
             HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    // count users
+    @PostMapping(value = "/userCount")
+        public ResponseEntity<?> count(@Valid @RequestBody Boolean status)
+        {
+            Long userCount = userService.getUsersCount(status);
+            if(userCount != null) {
+                return ResponseEntity.ok(new ApiResponse(true, "User count returned.", userCount));
+            }
+            else
+                return new ResponseEntity(new ApiResponse(false, "An Error occurred on the server!", HttpStatus.INTERNAL_SERVER_ERROR),
+                        HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 }

@@ -12,6 +12,6 @@ public interface IUserService {
     User createUser(SignUpRequest user) throws UsernameNotFoundException;
     User editUser(UpdateUserRequest user, String loggedOnUser) throws UserNotFoundException;
     String deleteUser(String userEmail) throws UserNotFoundException;
-    Long getUsersCount();
+    Long getUsersCount(Boolean status);
     List<User> getAllUsers();
 }

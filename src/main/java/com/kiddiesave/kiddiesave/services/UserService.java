@@ -143,8 +143,8 @@ public class UserService implements IUserService{
 
     @Override
     @Transactional
-    public Long getUsersCount() {
-       List<User> users = userRepo.findAll();
+    public Long getUsersCount(Boolean status) {
+       List<User> users = userRepo.findAllByStatus(status);
        // count the items in the list
         long noOfUsers = users.size();
        return noOfUsers;
