@@ -3,6 +3,7 @@ package com.kiddiesave.kiddiesave.controllers;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ApiResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.MessageResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.SignUpRequest;
+import com.kiddiesave.kiddiesave.RequestsAndResponses.UpdateUserRequest;
 import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.UserRepo;
@@ -47,7 +48,7 @@ public class UserController {
     // edit user
     // ensure that the user is in the right role for edit
     @PostMapping(value = "/editUser")
-    public ResponseEntity<?> editUser(@Valid @RequestBody User user, HttpServletRequest request) throws UserNotFoundException {
+    public ResponseEntity<?> editUser(@Valid @RequestBody UpdateUserRequest user, HttpServletRequest request) throws UserNotFoundException {
         // get the email address from the token
         String username = claims.getLoggedOnUsername(request); //make a global method or consider an alternate solution.
         // Create a DTO for the edited user, but pull the record from the db and assign the values to each parameter in the

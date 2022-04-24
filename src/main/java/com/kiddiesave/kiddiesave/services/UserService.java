@@ -1,6 +1,7 @@
 package com.kiddiesave.kiddiesave.services;
 
 import com.kiddiesave.kiddiesave.RequestsAndResponses.SignUpRequest;
+import com.kiddiesave.kiddiesave.RequestsAndResponses.UpdateUserRequest;
 import com.kiddiesave.kiddiesave.entity.Role;
 import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.entity.UserType;
@@ -102,9 +103,8 @@ public class UserService implements IUserService{
     }
     @Override
     @Transactional
-    public User editUser(User user,String loggedOnUser) throws UserNotFoundException
+    public User editUser(UpdateUserRequest user, String loggedOnUser) throws UserNotFoundException
     {
-       // User us = userRepo.findById(user.getId()).orElseThrow(() -> new UserNotFoundException(user.getId()));
         User us = userRepo.getUserByEmail(loggedOnUser);
        us.setTitle(user.getTitle());
        us.setFirstName(user.getFirstName());
@@ -113,8 +113,6 @@ public class UserService implements IUserService{
        us.setAddress(user.getAddress());
        us.setGender(user.getGender());
        us.setCountry(user.getCountry());
-       us.setDob(user.getDob());
-       us.setBvn(user.getBvn());
        us.setNin(user.getNin());
        us.setDateUpdated(new Date());
 
