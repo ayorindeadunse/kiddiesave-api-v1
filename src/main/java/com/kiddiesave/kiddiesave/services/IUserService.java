@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IUserService {
     User createUser(SignUpRequest user) throws UsernameNotFoundException;
-    User editUser(User user) throws UserNotFoundException;
+    User editUser(User user,String loggedOnUser) throws UserNotFoundException;
     String deleteUser(User user) throws UserNotFoundException;
     Long getUsersCount();
     List<User> getAllUsers();

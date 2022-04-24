@@ -102,9 +102,10 @@ public class UserService implements IUserService{
     }
     @Override
     @Transactional
-    public User editUser(User user) throws UserNotFoundException
+    public User editUser(User user,String loggedOnUser) throws UserNotFoundException
     {
-        User us = userRepo.findById(user.getId()).orElseThrow(() -> new UserNotFoundException(user.getId()));
+       // User us = userRepo.findById(user.getId()).orElseThrow(() -> new UserNotFoundException(user.getId()));
+        User us = userRepo.getUserByEmail(loggedOnUser);
        us.setTitle(user.getTitle());
        us.setFirstName(user.getFirstName());
        us.setMiddleName(user.getMiddleName());

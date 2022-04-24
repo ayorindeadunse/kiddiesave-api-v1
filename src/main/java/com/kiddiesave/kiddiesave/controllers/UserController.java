@@ -50,12 +50,13 @@ public class UserController {
     public ResponseEntity<?> editUser(@Valid @RequestBody User user, HttpServletRequest request) throws UserNotFoundException {
         // get the email address from the token
         String username = claims.getLoggedOnUsername(request); //make a global method or consider an alternate solution.
-        if(username == user.getEmail())
+        // Create a DTO for the edited user, but pull the record from the db and assign the values to each parameter in the
+        // payload
+        if(username != null)
         {
+            System.out.println("The logged on user is: "+username);
             //call edit user method in service
-            User editUser = userService.editUser(user);
-            // see if editUser returns anything
-            System.out.println("Edited User is: "+ editUser.getAddress());
+            User editUser = userService.editUser(user,username);
             if(editUser != null)
             {
                 // return a success message
@@ -63,6 +64,7 @@ public class UserController {
             }
 
         }
-        return ResponseEntity.ok(new MessageResponse("An error occurred. Wrong user credentials for required for update . "));
+        return ResponseEntity.ok(new MessageResponse("An error occurred. Wrong user credentials for required for update. "));
+
     }
 }

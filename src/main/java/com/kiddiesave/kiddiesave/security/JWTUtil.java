@@ -61,7 +61,7 @@ public class JWTUtil {
     {
         final String username = extractUsername(token);
        // check if token has expired
-        if(!isTokenExpired(token))
+        if(isTokenExpired(token)) //comparison between !isTokenExpired and isTokenExpired
         {
             return "The token has expired. Please log in again to continue.";
         }
