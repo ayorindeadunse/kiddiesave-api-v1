@@ -11,7 +11,7 @@ import java.util.List;
 public interface IUserService {
     User createUser(SignUpRequest user) throws UsernameNotFoundException;
     User editUser(UpdateUserRequest user, String loggedOnUser) throws UserNotFoundException;
-    String deleteUser(User user) throws UserNotFoundException;
+    String deleteUser(String userEmail) throws UserNotFoundException;
     Long getUsersCount();
     List<User> getAllUsers();
 }

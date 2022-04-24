@@ -10,6 +10,7 @@ import com.kiddiesave.kiddiesave.repository.UserRepo;
 import com.kiddiesave.kiddiesave.security.util.Claims;
 import com.kiddiesave.kiddiesave.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -52,8 +53,6 @@ public class UserController {
         String username = claims.getLoggedOnUsername(request); //make a global method or consider an alternate solution.
         if(username != null)
         {
-            System.out.println("The logged on user is: "+username);
-            //call edit user method in service
             User editUser = userService.editUser(user,username);
             if(editUser != null)
             {
@@ -63,5 +62,23 @@ public class UserController {
         }
         return ResponseEntity.ok(new MessageResponse("An error occurred. Wrong user credentials for required for update. "));
 
+    }
+
+    // delete/disable user
+    @PostMapping(value = "/deleteUser")
+    public ResponseEntity<?> deleteUser(@Valid @RequestBody String userEmail) throws UserNotFoundException
+    {
+        if(userEmail != null)
+        {
+            String status = userService.deleteUser(userEmail);
+
+         if(status.equalsIgnoreCase("User deleted successfully."))
+         {
+             return ResponseEntity.ok(new MessageResponse(status));
+         }
+            return ResponseEntity.ok(new MessageResponse(status));
+        }
+        return new ResponseEntity(new ApiResponse(false, "An Error occurred on the server!", HttpStatus.INTERNAL_SERVER_ERROR),
+            HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

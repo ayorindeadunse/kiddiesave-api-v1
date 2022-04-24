@@ -124,16 +124,21 @@ public class UserService implements IUserService{
 
     @Override
     @Transactional
-    public String deleteUser(User user) throws UserNotFoundException
+    public String deleteUser(String userEmail) throws UserNotFoundException
     {
-        User us = userRepo.findById(user.getId()).orElseThrow(() -> new UserNotFoundException(user.getId()));
+       // User us = userRepo.findById(user.getId()).orElseThrow(() -> new UserNotFoundException(user.getId()));
+        User us = userRepo.getUserByEmail(userEmail);
       if(us != null)
       {
-          userRepo.delete(us);
+          us.setStatus(false);
           //consider doing a safe delete by updating user status instead.
           // delete wallet?
+          User deletedUser =  userRepo.save(us);
+         if(deletedUser.isStatus() == true)
+        return "User deleted successfully.";
       }
-      return "user deleted successfully.";
+     // return "user deleted successfully.";
+        return "failed to delete user.";
     }
 
     @Override
