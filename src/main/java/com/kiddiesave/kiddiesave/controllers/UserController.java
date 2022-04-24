@@ -27,7 +27,7 @@ public class UserController {
     private Claims claims;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws UserNotFoundException {
         User usr = userRepo.getUserByEmail(signupRequest.getEmail());
         if(usr != null)
         {
@@ -49,10 +49,7 @@ public class UserController {
     // ensure that the user is in the right role for edit
     @PostMapping(value = "/editUser")
     public ResponseEntity<?> editUser(@Valid @RequestBody UpdateUserRequest user, HttpServletRequest request) throws UserNotFoundException {
-        // get the email address from the token
         String username = claims.getLoggedOnUsername(request); //make a global method or consider an alternate solution.
-        // Create a DTO for the edited user, but pull the record from the db and assign the values to each parameter in the
-        // payload
         if(username != null)
         {
             System.out.println("The logged on user is: "+username);
@@ -63,7 +60,6 @@ public class UserController {
                 // return a success message
                 return ResponseEntity.ok(new MessageResponse("User update successful. "));
             }
-
         }
         return ResponseEntity.ok(new MessageResponse("An error occurred. Wrong user credentials for required for update. "));
 
