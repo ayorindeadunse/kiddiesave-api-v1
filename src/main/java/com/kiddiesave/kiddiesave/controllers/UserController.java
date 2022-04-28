@@ -1,9 +1,6 @@
 package com.kiddiesave.kiddiesave.controllers;
 
-import com.kiddiesave.kiddiesave.RequestsAndResponses.ApiResponse;
-import com.kiddiesave.kiddiesave.RequestsAndResponses.MessageResponse;
-import com.kiddiesave.kiddiesave.RequestsAndResponses.SignUpRequest;
-import com.kiddiesave.kiddiesave.RequestsAndResponses.UpdateUserRequest;
+import com.kiddiesave.kiddiesave.RequestsAndResponses.*;
 import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.UserRepo;
@@ -66,11 +63,11 @@ public class UserController {
 
     // delete/disable user
     @PostMapping(value = "/deleteUser")
-    public ResponseEntity<?> deleteUser(@Valid @RequestBody String userEmail) throws UserNotFoundException
+    public ResponseEntity<?> deleteUser(@Valid @RequestBody DeleteUserRequest deleteUserRequest) throws UserNotFoundException
     {
-        if(userEmail != null)
+        if(deleteUserRequest.getEmail() != null)
         {
-            String status = userService.deleteUser(userEmail);
+            String status = userService.deleteUser(deleteUserRequest.getEmail());
 
          if(status.equalsIgnoreCase("User deleted successfully."))
          {
@@ -84,9 +81,9 @@ public class UserController {
 
     // count users
     @PostMapping(value = "/userCount")
-        public ResponseEntity<?> count(@Valid @RequestBody Boolean status)
+        public ResponseEntity<?> count(@Valid @RequestBody UserCountRequest status)
         {
-            Long userCount = userService.getUsersCount(status);
+            Long userCount = userService.getUsersCount(status.getUserStatus());
             if(userCount != null) {
                 return ResponseEntity.ok(new ApiResponse(true, "User count returned.", userCount));
             }
