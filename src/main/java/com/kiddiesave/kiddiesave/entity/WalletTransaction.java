@@ -19,8 +19,9 @@ public class WalletTransaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne //one to one relationship because one specific wallet transaction is tied to a user.
-    private User userId;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private String reference;
     private Double amount;
