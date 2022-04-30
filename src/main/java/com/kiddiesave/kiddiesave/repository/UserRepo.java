@@ -13,6 +13,6 @@ public interface UserRepo extends JpaRepository<User,Long> {
     User getUserByEmail(String email) throws UserNotFoundException;
     List<User> findAllByStatus(boolean status);
     User getUserByBvn(String bvn);
-   User getUserByPhoneNumberLinkedWithBvn(String phoneNumberLinkedWithBvn);
+    User getUserByPhoneNumberLinkedWithBvn(String phoneNumberLinkedWithBvn);
 
 }

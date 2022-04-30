@@ -45,7 +45,7 @@ public class UserController {
 
     // edit user
     // ensure that the user is in the right role for edit
-    @PostMapping(value = "/editUser")
+    @PostMapping(value = "/edituser")
     public ResponseEntity<?> editUser(@Valid @RequestBody UpdateUserRequest user, HttpServletRequest request) throws UserNotFoundException {
         String username = claims.getLoggedOnUsername(request); //make a global method or consider an alternate solution.
         if(username != null)
@@ -62,7 +62,7 @@ public class UserController {
     }
 
     // delete/disable user
-    @PostMapping(value = "/deleteUser")
+    @PostMapping(value = "/deleteuser")
     public ResponseEntity<?> deleteUser(@Valid @RequestBody DeleteUserRequest deleteUserRequest) throws UserNotFoundException
     {
         if(deleteUserRequest.getEmail() != null)
@@ -80,7 +80,7 @@ public class UserController {
     }
 
     // count users
-    @PostMapping(value = "/userCount")
+    @PostMapping(value = "/usercount")
         public ResponseEntity<?> count(@Valid @RequestBody UserCountRequest status)
         {
             Long userCount = userService.getUsersCount(status.getUserStatus());

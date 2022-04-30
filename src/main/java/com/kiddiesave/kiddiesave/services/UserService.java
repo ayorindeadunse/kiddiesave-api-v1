@@ -137,7 +137,6 @@ public class UserService implements IUserService{
          if(deletedUser.isStatus() == false)
         return "User deleted successfully.";
       }
-     // return "user deleted successfully.";
         return "failed to delete user.";
     }
 
