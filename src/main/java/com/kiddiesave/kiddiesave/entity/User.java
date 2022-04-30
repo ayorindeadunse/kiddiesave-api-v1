@@ -22,7 +22,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
-    
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String bvn;
@@ -53,24 +53,19 @@ public class User {
     private String pinSalt;
     private boolean status;
 
-    //link wallet id
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Wallet> wallets;
 
-    public List<Wallet> getWallets() {
-        return wallets;
-    }
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_wallet",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "wallet_id"))
+    private Set<Wallet> wallets = new HashSet<>();
 
-    public void setWallets(List<Wallet> wallets) {
-        this.wallets = wallets;
-    }
 
     public User(String email, String password, String bvn, String firstName, String middleName, String lastName,
                 String address, String gender, String country, String title, String phoneNumberLinkedWithBvn, Date dob) {

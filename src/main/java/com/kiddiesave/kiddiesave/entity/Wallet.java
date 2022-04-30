@@ -18,7 +18,7 @@ public class Wallet {
     private Long Id;
 
     @ManyToOne
-    @JoinColumn(name = "userid")
+    @JoinColumn(name = "user_id")
     private User user;
 
     private WalletType walletType;
