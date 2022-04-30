@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -19,7 +18,8 @@ public class Wallet {
     private Long Id;
 
     @ManyToOne
-    private User userId;
+    @JoinColumn(name = "userid")
+    private User user;
 
     private WalletType walletType;
     private boolean status;

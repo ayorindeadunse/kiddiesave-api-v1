@@ -37,7 +37,7 @@ public class UserService implements IUserService{
     private PasswordEncoder passwordEncoder;
     private RoleRepo roleRepo;
 
-    public UserService(UserRepo userRepo,WalletRepo walletRepo,PasswordEncoder passwordEncoder,
+    public UserService(UserRepo userRepo,PasswordEncoder passwordEncoder,
                        RoleRepo roleRepo)
     {
         this.userRepo = userRepo;
@@ -134,7 +134,7 @@ public class UserService implements IUserService{
           //consider doing a safe delete by updating user status instead.
           // delete wallet?
           User deletedUser =  userRepo.save(us);
-         if(deletedUser.isStatus() == true)
+         if(deletedUser.isStatus() == false)
         return "User deleted successfully.";
       }
      // return "user deleted successfully.";
