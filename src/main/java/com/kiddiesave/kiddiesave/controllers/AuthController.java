@@ -9,7 +9,6 @@ import com.kiddiesave.kiddiesave.security.JWTUtil;
 import com.kiddiesave.kiddiesave.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,11 +25,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/auth")
 public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-    // injecting dependencies
-    @Autowired private UserRepo userRepo;
-    @Autowired private JWTUtil jwtUtil;
-    @Autowired private AuthenticationManager authManager;
 
+   private UserRepo userRepo;
+   private JWTUtil jwtUtil;
+   private AuthenticationManager authManager;
+
+    public AuthController(UserRepo userRepo, JWTUtil jwtUtil, AuthenticationManager authManager) {
+        this.userRepo = userRepo;
+        this.jwtUtil = jwtUtil;
+        this.authManager = authManager;
+    }
 
     @PostMapping("/signin")
             public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws UserNotFoundException

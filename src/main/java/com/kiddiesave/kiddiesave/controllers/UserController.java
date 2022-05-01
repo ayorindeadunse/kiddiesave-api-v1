@@ -6,30 +6,31 @@ import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.UserRepo;
 import com.kiddiesave.kiddiesave.security.util.Claims;
 import com.kiddiesave.kiddiesave.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-@RestController // Marks the class as a rest controller
+@RestController
 @RequestMapping("/api/user")
 public class UserController {
-    // Inject dependencies
-    @Autowired
+
     private UserService userService;
-    @Autowired
     private UserRepo userRepo;
-    @Autowired
     private Claims claims;
+
+    public UserController(UserService userService, UserRepo userRepo, Claims claims) {
+        this.userService = userService;
+        this.userRepo = userRepo;
+        this.claims = claims;
+    }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws UserNotFoundException {
         User usr = userRepo.getUserByEmail(signupRequest.getEmail());
         if(usr != null)
         {
-            //return message to user
             return ResponseEntity.ok(new MessageResponse("User already exists."));
         }
         User user = userService.createUser(signupRequest);

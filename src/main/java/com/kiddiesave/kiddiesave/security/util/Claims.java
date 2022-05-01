@@ -16,14 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 public class Claims {
     private String jwt;
     private String username;
-    private User user;
+
     private String bearerToken;
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
+    private final JWTUtil jwtUtil;
+    private User user;
 
-    @Autowired
-    private JWTUtil jwtUtil;
+    public Claims(UserRepo userRepo, JWTUtil jwtUtil) {
+        this.userRepo = userRepo;
+        this.jwtUtil = jwtUtil;
+    }
 
     private ClaimsResponse claimsResponse;
 
