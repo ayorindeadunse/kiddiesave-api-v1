@@ -7,9 +7,7 @@ import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.entity.UserType;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.RoleRepo;
-import com.kiddiesave.kiddiesave.repository.UserDeviceRepo;
 import com.kiddiesave.kiddiesave.repository.UserRepo;
-import com.kiddiesave.kiddiesave.repository.WalletRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -32,10 +29,11 @@ public class UserService implements IUserService{
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    private RoleRepo roleRepo;
+    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private final RoleRepo roleRepo;
 
     public UserService(UserRepo userRepo,PasswordEncoder passwordEncoder,
                        RoleRepo roleRepo)
