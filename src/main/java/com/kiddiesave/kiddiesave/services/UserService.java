@@ -10,7 +10,6 @@ import com.kiddiesave.kiddiesave.repository.RoleRepo;
 import com.kiddiesave.kiddiesave.repository.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,11 +27,8 @@ public class UserService implements IUserService{
     //Logger
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    @Autowired
     private final UserRepo userRepo;
-    @Autowired
     private final PasswordEncoder passwordEncoder;
-    @Autowired
     private final RoleRepo roleRepo;
 
     public UserService(UserRepo userRepo,PasswordEncoder passwordEncoder,
