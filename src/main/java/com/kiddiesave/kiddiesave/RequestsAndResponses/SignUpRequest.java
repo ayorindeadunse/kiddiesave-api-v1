@@ -1,10 +1,5 @@
 package com.kiddiesave.kiddiesave.RequestsAndResponses;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -40,7 +35,7 @@ public class SignUpRequest {
     @NotBlank
     private String mobile;
     @NotBlank
-    private Date dob;
+    private String dob;
 
     public SignUpRequest() {
     }
@@ -141,11 +136,11 @@ public class SignUpRequest {
         this.mobile = mobile;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 }

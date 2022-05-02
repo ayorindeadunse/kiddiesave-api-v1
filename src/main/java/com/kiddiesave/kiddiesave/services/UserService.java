@@ -8,9 +8,9 @@ import com.kiddiesave.kiddiesave.entity.UserType;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.RoleRepo;
 import com.kiddiesave.kiddiesave.repository.UserRepo;
+import com.kiddiesave.kiddiesave.security.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,13 +31,15 @@ public class UserService implements IUserService{
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepo roleRepo;
+    private final DateUtils dateUtils;
 
     public UserService(UserRepo userRepo,PasswordEncoder passwordEncoder,
-                       RoleRepo roleRepo)
+                       RoleRepo roleRepo,DateUtils dateUtils)
     {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
         this.roleRepo = roleRepo;
+        this.dateUtils = dateUtils;
     }
     @Override
     @Transactional
@@ -54,7 +56,7 @@ public class UserService implements IUserService{
                     user.getCountry(),
                     user.getTitle(),
                     user.getMobile(),
-                    user.getDob());
+                    this.dateUtils.createDateFromDateString(user.getDob()));
 
                     //set other properties
             Set<String> strRoles = user.getRole();
