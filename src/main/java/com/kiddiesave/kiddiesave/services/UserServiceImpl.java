@@ -5,7 +5,7 @@ import com.kiddiesave.kiddiesave.RequestsAndResponses.UpdateUserRequest;
 import com.kiddiesave.kiddiesave.entity.Role;
 import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.entity.UserType;
-import com.kiddiesave.kiddiesave.exceptions.UserException;
+import com.kiddiesave.kiddiesave.exceptions.ApplicationException;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.RoleRepository;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
@@ -44,13 +44,15 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     @Transactional
-    public User createUser(SignUpRequest user) throws UsernameNotFoundException, UserException, UserNotFoundException {
+    public User createUser(SignUpRequest user) throws UsernameNotFoundException, ApplicationException, UserNotFoundException {
             //alternate course of action, validate bvn and use that to fetch fields to register user;
+
         User usr = userRepository.getUserByEmail(user.getEmail());
         if(usr != null)
         {
-            throw new UserException(usr.getEmail());
+            throw new ApplicationException("The user already exists.");
         }
+
             User newUser = new User(user.getEmail(),
                     passwordEncoder.encode(user.getPassword()),
                     user.getBvn(),
@@ -106,7 +108,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     @Transactional
-    public User editUser(UpdateUserRequest user, String loggedOnUser) throws UserNotFoundException, UserException {
+    public User editUser(UpdateUserRequest user, String loggedOnUser) throws UserNotFoundException, ApplicationException {
         User us = userRepository.getUserByEmail(loggedOnUser);
        us.setTitle(user.getTitle());
        us.setFirstName(user.getFirstName());
@@ -125,7 +127,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public String deleteUser(String userEmail) throws UserNotFoundException, UserException {
+    public String deleteUser(String userEmail) throws UserNotFoundException, ApplicationException {
         User us = userRepository.getUserByEmail(userEmail);
       if(us != null)
       {

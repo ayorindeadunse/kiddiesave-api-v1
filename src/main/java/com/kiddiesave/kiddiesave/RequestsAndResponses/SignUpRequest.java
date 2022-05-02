@@ -4,7 +4,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Date;
 import java.util.Set;
 
 public class SignUpRequest {
@@ -33,6 +32,8 @@ public class SignUpRequest {
     private Set<String> role;
     private String title;
     @NotBlank
+    @Size(min = 13,message = "The minimum length of the mobile number should be 13 and start with 234.")
+    @Pattern(regexp = "^234\\d{10}",message = "The minimum length of the mobile number should be 13 and start with 234.")
     private String mobile;
     @NotBlank
     private String dob;

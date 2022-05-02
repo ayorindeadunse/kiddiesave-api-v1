@@ -2,6 +2,7 @@ package com.kiddiesave.kiddiesave.security.util;
 
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ClaimsResponse;
 import com.kiddiesave.kiddiesave.entity.User;
+import com.kiddiesave.kiddiesave.exceptions.ApplicationException;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
 import com.kiddiesave.kiddiesave.security.JWTUtil;
@@ -29,7 +30,7 @@ public class Claims {
 
     private ClaimsResponse claimsResponse;
 
-    public ClaimsResponse getClaim(HttpServletRequest request) throws UserNotFoundException {
+    public ClaimsResponse getClaim(HttpServletRequest request) throws UserNotFoundException, ApplicationException {
         // return a claims object used to access api resources
         bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {

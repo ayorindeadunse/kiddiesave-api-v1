@@ -2,7 +2,7 @@ package com.kiddiesave.kiddiesave.controllers;
 
 import com.kiddiesave.kiddiesave.RequestsAndResponses.*;
 import com.kiddiesave.kiddiesave.entity.User;
-import com.kiddiesave.kiddiesave.exceptions.UserException;
+import com.kiddiesave.kiddiesave.exceptions.ApplicationException;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
 import com.kiddiesave.kiddiesave.security.util.Claims;
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws UserException, UserNotFoundException {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws ApplicationException, UserNotFoundException {
 
         User user = userServiceImpl.createUser(signupRequest);
         if (user.getId() > 0) {
@@ -44,7 +44,7 @@ public class UserController {
     // edit user
     // ensure that the user is in the right role for edit
     @PostMapping(value = "/edituser")
-    public ResponseEntity<?> editUser(@Valid @RequestBody UpdateUserRequest user, HttpServletRequest request) throws UserNotFoundException, UserException {
+    public ResponseEntity<?> editUser(@Valid @RequestBody UpdateUserRequest user, HttpServletRequest request) throws UserNotFoundException, ApplicationException {
         String username = claims.getLoggedOnUsername(request); //make a global method or consider an alternate solution.
         if(username != null)
         {
@@ -61,7 +61,7 @@ public class UserController {
 
     // delete/disable user
     @PostMapping(value = "/deleteuser")
-    public ResponseEntity<?> deleteUser(@Valid @RequestBody DeleteUserRequest deleteUserRequest) throws UserNotFoundException, UserException {
+    public ResponseEntity<?> deleteUser(@Valid @RequestBody DeleteUserRequest deleteUserRequest) throws UserNotFoundException, ApplicationException {
         if(deleteUserRequest.getEmail() != null)
         {
             String status = userServiceImpl.deleteUser(deleteUserRequest.getEmail());
