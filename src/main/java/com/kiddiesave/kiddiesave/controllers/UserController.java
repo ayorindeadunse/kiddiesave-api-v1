@@ -3,9 +3,9 @@ package com.kiddiesave.kiddiesave.controllers;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.*;
 import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
-import com.kiddiesave.kiddiesave.repository.UserRepo;
+import com.kiddiesave.kiddiesave.repository.UserRepository;
 import com.kiddiesave.kiddiesave.security.util.Claims;
-import com.kiddiesave.kiddiesave.services.UserService;
+import com.kiddiesave.kiddiesave.services.UserServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,24 +16,24 @@ import javax.validation.Valid;
 @RequestMapping("/api/user")
 public class UserController {
 
-    private UserService userService;
-    private UserRepo userRepo;
+    private UserServiceImpl userServiceImpl;
+    private UserRepository userRepository;
     private Claims claims;
 
-    public UserController(UserService userService, UserRepo userRepo, Claims claims) {
-        this.userService = userService;
-        this.userRepo = userRepo;
+    public UserController(UserServiceImpl userServiceImpl, UserRepository userRepository, Claims claims) {
+        this.userServiceImpl = userServiceImpl;
+        this.userRepository = userRepository;
         this.claims = claims;
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws UserNotFoundException {
-        User usr = userRepo.getUserByEmail(signupRequest.getEmail());
+        User usr = userRepository.getUserByEmail(signupRequest.getEmail());
         if(usr != null)
         {
             return ResponseEntity.ok(new MessageResponse("User already exists."));
         }
-        User user = userService.createUser(signupRequest);
+        User user = userServiceImpl.createUser(signupRequest);
         if (user.getId() > 0) {
             // consider sending a token to the client so frontend can use as logic to send user to dashboard.
             return ResponseEntity.ok(new ApiResponse(true, "User registered successfully! " +
@@ -51,7 +51,7 @@ public class UserController {
         String username = claims.getLoggedOnUsername(request); //make a global method or consider an alternate solution.
         if(username != null)
         {
-            User editUser = userService.editUser(user,username);
+            User editUser = userServiceImpl.editUser(user,username);
             if(editUser != null)
             {
                 // return a success message
@@ -68,7 +68,7 @@ public class UserController {
     {
         if(deleteUserRequest.getEmail() != null)
         {
-            String status = userService.deleteUser(deleteUserRequest.getEmail());
+            String status = userServiceImpl.deleteUser(deleteUserRequest.getEmail());
 
          if(status.equalsIgnoreCase("User deleted successfully."))
          {
@@ -84,7 +84,7 @@ public class UserController {
     @PostMapping(value = "/usercount")
         public ResponseEntity<?> count(@Valid @RequestBody UserCountRequest status)
         {
-            Long userCount = userService.getUsersCount(status.getUserStatus());
+            Long userCount = userServiceImpl.getUsersCount(status.getUserStatus());
             if(userCount != null) {
                 return ResponseEntity.ok(new ApiResponse(true, "User count returned.", userCount));
             }

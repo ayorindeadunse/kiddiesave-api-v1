@@ -3,9 +3,8 @@ package com.kiddiesave.kiddiesave.security.util;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ClaimsResponse;
 import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
-import com.kiddiesave.kiddiesave.repository.UserRepo;
+import com.kiddiesave.kiddiesave.repository.UserRepository;
 import com.kiddiesave.kiddiesave.security.JWTUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -19,12 +18,12 @@ public class Claims {
 
     private String bearerToken;
 
-    private final UserRepo userRepo;
+    private final UserRepository userRepository;
     private final JWTUtil jwtUtil;
     private User user;
 
-    public Claims(UserRepo userRepo, JWTUtil jwtUtil) {
-        this.userRepo = userRepo;
+    public Claims(UserRepository userRepository, JWTUtil jwtUtil) {
+        this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
     }
 
@@ -37,7 +36,7 @@ public class Claims {
             jwt = bearerToken.substring(7, bearerToken.length());
             username = jwtUtil.extractUsername(jwt);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() != null) {
-                user = userRepo.getUserByEmail(username);
+                user = userRepository.getUserByEmail(username);
                 String validUser = jwtUtil.validateToken(jwt);
                 if (validUser == user.getEmail()) {
                     claimsResponse = new ClaimsResponse();

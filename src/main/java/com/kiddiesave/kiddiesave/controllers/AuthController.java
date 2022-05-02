@@ -4,7 +4,7 @@ import com.kiddiesave.kiddiesave.RequestsAndResponses.JwtResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.LoginRequest;
 import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
-import com.kiddiesave.kiddiesave.repository.UserRepo;
+import com.kiddiesave.kiddiesave.repository.UserRepository;
 import com.kiddiesave.kiddiesave.security.JWTUtil;
 import com.kiddiesave.kiddiesave.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
@@ -26,12 +26,12 @@ import java.util.stream.Collectors;
 public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-   private UserRepo userRepo;
+   private UserRepository userRepository;
    private JWTUtil jwtUtil;
    private AuthenticationManager authManager;
 
-    public AuthController(UserRepo userRepo, JWTUtil jwtUtil, AuthenticationManager authManager) {
-        this.userRepo = userRepo;
+    public AuthController(UserRepository userRepository, JWTUtil jwtUtil, AuthenticationManager authManager) {
+        this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
         this.authManager = authManager;
     }
@@ -43,7 +43,7 @@ public class AuthController {
         loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-       User user = userRepo.getUserByEmail(loginRequest.getUsernameOrEmail());
+       User user = userRepository.getUserByEmail(loginRequest.getUsernameOrEmail());
        String jwt = jwtUtil.generateToken(user);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
