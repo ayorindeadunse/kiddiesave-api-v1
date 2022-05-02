@@ -52,6 +52,12 @@ public class UserServiceImpl implements UserService {
         {
             throw new ApplicationException("The user already exists.");
         }
+        // check if bvn exists
+        User usr1 = userRepository.getUserByBvn(user.getBvn());
+        if(usr1 != null)
+        {
+            throw new ApplicationException("User with the bvn already exists.");
+        }
 
             User newUser = new User(user.getEmail(),
                     passwordEncoder.encode(user.getPassword()),
