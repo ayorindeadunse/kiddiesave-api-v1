@@ -58,6 +58,9 @@ public class UserServiceImpl implements UserService {
         {
             throw new ApplicationException("User with the bvn already exists.");
         }
+        // check for referral (for later)
+
+        // Validate bvn
 
             User newUser = new User(user.getEmail(),
                     passwordEncoder.encode(user.getPassword()),
