@@ -28,11 +28,11 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws UserNotFoundException {
-        User usr = userRepository.getUserByEmail(signupRequest.getEmail());
+       /* User usr = userRepository.getUserByEmail(signupRequest.getEmail());
         if(usr != null)
         {
             return ResponseEntity.ok(new MessageResponse("User already exists."));
-        }
+        }*/
         User user = userServiceImpl.createUser(signupRequest);
         if (user.getId() > 0) {
             // consider sending a token to the client so frontend can use as logic to send user to dashboard.
