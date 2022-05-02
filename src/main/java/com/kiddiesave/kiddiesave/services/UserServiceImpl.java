@@ -5,6 +5,7 @@ import com.kiddiesave.kiddiesave.RequestsAndResponses.UpdateUserRequest;
 import com.kiddiesave.kiddiesave.entity.Role;
 import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.entity.UserType;
+import com.kiddiesave.kiddiesave.exceptions.UserException;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.RoleRepository;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
@@ -43,12 +44,12 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     @Transactional
-    public User createUser(SignUpRequest user) throws UsernameNotFoundException,UserNotFoundException {
+    public User createUser(SignUpRequest user) throws UsernameNotFoundException, UserException, UserNotFoundException {
             //alternate course of action, validate bvn and use that to fetch fields to register user;
         User usr = userRepository.getUserByEmail(user.getEmail());
         if(usr != null)
         {
-            throw new UserNotFoundException(usr.getEmail());
+            throw new UserException(usr.getEmail());
         }
             User newUser = new User(user.getEmail(),
                     passwordEncoder.encode(user.getPassword()),
@@ -105,8 +106,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     @Transactional
-    public User editUser(UpdateUserRequest user, String loggedOnUser) throws UserNotFoundException
-    {
+    public User editUser(UpdateUserRequest user, String loggedOnUser) throws UserNotFoundException, UserException {
         User us = userRepository.getUserByEmail(loggedOnUser);
        us.setTitle(user.getTitle());
        us.setFirstName(user.getFirstName());
@@ -118,17 +118,14 @@ public class UserServiceImpl implements UserService {
        us.setNin(user.getNin());
        us.setDateUpdated(new Date());
 
-     // call JPA method to update use.
-        User editedUser = userRepository.save(us);
+       User editedUser = userRepository.save(us);
         logger.info("User record updated: "+ editedUser.getFirstName() + "" +editedUser.getLastName());
         return editedUser;
     }
 
     @Override
     @Transactional
-    public String deleteUser(String userEmail) throws UserNotFoundException
-    {
-       // User us = userRepo.findById(user.getId()).orElseThrow(() -> new UserNotFoundException(user.getId()));
+    public String deleteUser(String userEmail) throws UserNotFoundException, UserException {
         User us = userRepository.getUserByEmail(userEmail);
       if(us != null)
       {

@@ -3,6 +3,7 @@ package com.kiddiesave.kiddiesave.controllers;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.JwtResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.LoginRequest;
 import com.kiddiesave.kiddiesave.entity.User;
+import com.kiddiesave.kiddiesave.exceptions.UserException;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
 import com.kiddiesave.kiddiesave.security.JWTUtil;
@@ -37,8 +38,7 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-            public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws UserNotFoundException
-    {
+            public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws UserNotFoundException, UserException {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsernameOrEmail(),
         loginRequest.getPassword()));
 

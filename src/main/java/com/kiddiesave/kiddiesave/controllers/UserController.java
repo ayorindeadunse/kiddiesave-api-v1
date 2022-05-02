@@ -2,6 +2,7 @@ package com.kiddiesave.kiddiesave.controllers;
 
 import com.kiddiesave.kiddiesave.RequestsAndResponses.*;
 import com.kiddiesave.kiddiesave.entity.User;
+import com.kiddiesave.kiddiesave.exceptions.UserException;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
 import com.kiddiesave.kiddiesave.security.util.Claims;
@@ -27,12 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws UserNotFoundException {
-       /* User usr = userRepository.getUserByEmail(signupRequest.getEmail());
-        if(usr != null)
-        {
-            return ResponseEntity.ok(new MessageResponse("User already exists."));
-        }*/
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws UserException, UserNotFoundException {
+
         User user = userServiceImpl.createUser(signupRequest);
         if (user.getId() > 0) {
             // consider sending a token to the client so frontend can use as logic to send user to dashboard.
@@ -47,7 +44,7 @@ public class UserController {
     // edit user
     // ensure that the user is in the right role for edit
     @PostMapping(value = "/edituser")
-    public ResponseEntity<?> editUser(@Valid @RequestBody UpdateUserRequest user, HttpServletRequest request) throws UserNotFoundException {
+    public ResponseEntity<?> editUser(@Valid @RequestBody UpdateUserRequest user, HttpServletRequest request) throws UserNotFoundException, UserException {
         String username = claims.getLoggedOnUsername(request); //make a global method or consider an alternate solution.
         if(username != null)
         {
@@ -64,8 +61,7 @@ public class UserController {
 
     // delete/disable user
     @PostMapping(value = "/deleteuser")
-    public ResponseEntity<?> deleteUser(@Valid @RequestBody DeleteUserRequest deleteUserRequest) throws UserNotFoundException
-    {
+    public ResponseEntity<?> deleteUser(@Valid @RequestBody DeleteUserRequest deleteUserRequest) throws UserNotFoundException, UserException {
         if(deleteUserRequest.getEmail() != null)
         {
             String status = userServiceImpl.deleteUser(deleteUserRequest.getEmail());
