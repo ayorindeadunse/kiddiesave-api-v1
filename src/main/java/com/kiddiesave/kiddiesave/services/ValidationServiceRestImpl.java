@@ -29,6 +29,8 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
     //public ValidatePhoneNumberResponse sendOTPCode(String phoneNumber) throws IOException {
             public StringBuilder sendOTPCode(String phoneNumber) throws IOException
     {
+        // for purposes of your test, use the validate phone number objects getters and setters below,
+        // then pass the parameters in a rest api endpoint which will then make an Url connection to Termii's api
         String responseLine = null;
         StringBuilder response = null;
             ValidatePhoneNumber validatePhoneNumber = new ValidatePhoneNumber();
