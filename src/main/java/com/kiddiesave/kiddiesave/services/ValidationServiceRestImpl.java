@@ -27,7 +27,7 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
     private String smsOtpExpiryTime;
     @Override
     //public ValidatePhoneNumberResponse sendOTPCode(String phoneNumber) throws IOException {
-            public StringBuilder sendOTPCode(String phoneNumber) throws IOException
+            public String sendOTPCode(String phoneNumber) throws IOException
     {
         // for purposes of your test, use the validate phone number objects getters and setters below,
         // then pass the parameters in a rest api endpoint which will then make an Url connection to Termii's api
@@ -84,6 +84,6 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
                        response.append(responseLine.trim());
                    }
                }
-    return response;
+    return response.toString();
     }
 }
