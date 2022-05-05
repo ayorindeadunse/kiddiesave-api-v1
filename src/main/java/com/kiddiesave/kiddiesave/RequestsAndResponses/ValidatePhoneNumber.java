@@ -2,10 +2,12 @@ package com.kiddiesave.kiddiesave.RequestsAndResponses;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.boot.jackson.JsonComponent;
 
 @Getter
 @Setter
+@ToString
 @JsonComponent
 public class ValidatePhoneNumber {
     private String apiKey;
