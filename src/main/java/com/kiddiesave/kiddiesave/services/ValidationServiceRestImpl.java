@@ -71,7 +71,7 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
             int responseCode = connection.getResponseCode();
            // if(responseCode == HttpURLConnection.HTTP_OK)
           // get output
-        System.out.println("Respponse Code: "+responseCode);
+        System.out.println("Response Code: "+responseCode);
 
                 // display response to console
                try(BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(),"utf-8")))
