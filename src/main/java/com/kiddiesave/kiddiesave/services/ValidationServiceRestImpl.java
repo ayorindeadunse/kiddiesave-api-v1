@@ -3,6 +3,7 @@ package com.kiddiesave.kiddiesave.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumber;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 // test implementation
+@Service
 public class ValidationServiceRestImpl implements ValidationServiceRest{
 
     @Value("${SmsOtpUrl}")
