@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/validation")
@@ -21,8 +22,10 @@ public class ValidationController {
     }
 
     @PostMapping("/generateotp")
-    public ResponseEntity<?> ValidatePhoneNumber(@Valid @RequestBody ValidatePhoneNumberRequest validatePhoneNumberRequest) {
+    public ResponseEntity<?> ValidatePhoneNumber(@Valid @RequestBody ValidatePhoneNumberRequest validatePhoneNumberRequest)
+            throws IOException {
 
-        return null;
+        String otp = validationServiceRest.sendOTPCode(validatePhoneNumberRequest.getPhone());
+        return ResponseEntity.ok(otp);
     }
 }
