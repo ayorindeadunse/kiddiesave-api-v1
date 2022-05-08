@@ -25,7 +25,7 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
     private String senderId;
     @Value("${SmsOtpChannel}")
     private String smsOtpChannel;
-    @Value("${SmsOtpExpirtyTime}")
+    @Value("${SmsOtpExpiryTime}")
     private String smsOtpExpiryTime;
     @Override
     //public ValidatePhoneNumberResponse sendOTPCode(String phoneNumber) throws IOException {
