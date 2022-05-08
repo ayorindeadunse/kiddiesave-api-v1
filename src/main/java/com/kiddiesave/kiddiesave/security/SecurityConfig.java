@@ -41,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**").permitAll() // allows auth requests to be made without authentication
               //  .antMatchers("/api/user/**").hasRole("USER") //allows only users with the "USER" role to make requests to the user routes
                 .antMatchers("/api/user/**").permitAll()
+                .antMatchers("/api/validation/**").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and()
