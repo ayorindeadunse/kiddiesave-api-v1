@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumber;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,7 +26,7 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
     private String smsOtpChannel;
     @Value("${SmsOtpExpiryTime}")
     private String smsOtpExpiryTime;
-    @Override
+
     //public ValidatePhoneNumberResponse sendOTPCode(String phoneNumber) throws IOException {
             public String sendOTPCode(String phoneNumber) throws IOException
     {
@@ -54,25 +53,30 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
             URL url = new URL(smsOtpUrl);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type","application/json; utf-8");
-            connection.setRequestProperty("Accept","application/json");
+            connection.setRequestProperty("Content-Type","application/json");
+            //connection.setRequestProperty("Accept","application/json");
             connection.setDoOutput(true);
             // wrap object as a string
             ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(validatePhoneNumber);
+           // String json = mapper.writeValueAsString(validatePhoneNumber);
+
 
             try(OutputStream os = connection.getOutputStream())
             {
-                byte[] input = json.getBytes(StandardCharsets.UTF_8);
-                os.write(input,0,input.length);
+               // byte[] input = json.getBytes(StandardCharsets.UTF_8);
+               // os.write(input,0,input.length);
+                os.write(mapper.writeValueAsBytes(validatePhoneNumber));
+                os.flush();
             }
             catch(Exception e)
             {
                 System.out.println("Error in parsing json object as string: "+e);
             }
 
+
             // get response code
             int responseCode = connection.getResponseCode();
+
            // if(responseCode == HttpURLConnection.HTTP_OK)
           // get output
         System.out.println("Response Code: "+responseCode);

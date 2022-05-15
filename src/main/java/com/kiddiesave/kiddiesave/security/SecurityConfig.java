@@ -4,6 +4,7 @@ import com.kiddiesave.kiddiesave.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -42,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               //  .antMatchers("/api/user/**").hasRole("USER") //allows only users with the "USER" role to make requests to the user routes
                 .antMatchers("/api/user/**").permitAll()
                 .antMatchers("/api/validation/**").permitAll()
-                .antMatchers("https://api.ng.termii.com/api/sms/otp/send").permitAll()
+                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and()
