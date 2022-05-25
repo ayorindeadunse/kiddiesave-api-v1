@@ -25,8 +25,8 @@ public class ValidationController {
     public ResponseEntity<?> ValidatePhoneNumber(@Valid @RequestBody ValidatePhoneNumberRequest validatePhoneNumberRequest)
             throws IOException {
 
-        //String otp = validationServiceRest.sendOTPCode(validatePhoneNumberRequest.getPhone());
-      //  return ResponseEntity.ok(otp);
-        return null;
+        String otp = validationServiceRest.sendOTPCode(validatePhoneNumberRequest.getPhone());
+       return ResponseEntity.ok(otp);
+      //  return null;
     }
 }

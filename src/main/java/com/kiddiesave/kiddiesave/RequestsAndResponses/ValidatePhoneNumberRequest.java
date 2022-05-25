@@ -10,7 +10,7 @@ import java.util.Date;
 public class ValidatePhoneNumberRequest {
     @NotBlank
     private String phone;
-    private String code;
-    private String pinId;
-    private Date dateCreated;
+   // private String code;
+  //  private String pinId;
+   // private Date dateCreated;
 }

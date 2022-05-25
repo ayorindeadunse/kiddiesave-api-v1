@@ -43,7 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               //  .antMatchers("/api/user/**").hasRole("USER") //allows only users with the "USER" role to make requests to the user routes
                 .antMatchers("/api/user/**").permitAll()
                 .antMatchers("/api/validation/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and()
