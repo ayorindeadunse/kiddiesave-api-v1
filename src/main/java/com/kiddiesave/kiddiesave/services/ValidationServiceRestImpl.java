@@ -1,20 +1,16 @@
 package com.kiddiesave.kiddiesave.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumber;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.ObjectMapper;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 
 // test implementation
 @Service
@@ -31,14 +27,9 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
     @Value("${SmsOtpExpiryTime}")
     private String smsOtpExpiryTime;
 
-    //public ValidatePhoneNumberResponse sendOTPCode(String phoneNumber) throws IOException {
-            public String sendOTPCode(String phoneNumber) throws IOException
-    {
-        // for purposes of your test, use the validate phone number objects getters and setters below,
-        // then pass the parameters in a rest api endpoint which will then make an Url connection to Termii's api
-       // String responseLine = null;
-      //  StringBuilder response = null;
-            ValidatePhoneNumber validatePhoneNumber = new ValidatePhoneNumber();
+            public String sendOTPCode(String phoneNumber) throws UnirestException {
+
+          /*  ValidatePhoneNumber validatePhoneNumber = new ValidatePhoneNumber();
             validatePhoneNumber.setApiKey(smsOtpApiKey);
             validatePhoneNumber.setMessageType("NUMERIC");
             validatePhoneNumber.setTo(phoneNumber);
@@ -48,61 +39,16 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
             validatePhoneNumber.setPinTimeToLive(5);
             validatePhoneNumber.setPinLength(6);
             validatePhoneNumber.setPinPlaceholder("<1234>");
-            validatePhoneNumber.setMessageText("Welcome to Kiddiesave! Use this OTP <1234> to " +
-                    "complete your registration. OTP expires in "+smsOtpExpiryTime);
-            validatePhoneNumber.setPinType("Numeric");
-
-            // send request
-            // wrap this in a method
-           /* URL url = new URL(smsOtpUrl);
-            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type","application/json");
-            connection.setDoOutput(true);
-
-        OutputStream os = connection.getOutputStream();
-        ObjectMapper mapper = new ObjectMapper();
-        os.write(mapper.writeValueAsBytes(validatePhoneNumber));
-        os.flush();
-        os.close();
+            validatePhoneNumber.setMessageText("Welcome to Kiddiesave! Use this OTP <1234> to complete your registration. OTP expires in "+smsOtpExpiryTime);
+            validatePhoneNumber.setPinType("Numeric");*/
 
 
-            // get response code
-            int responseCode = connection.getResponseCode();
-           // if(responseCode == HttpURLConnection.HTTP_OK)
-          // get output
-        System.out.println("Response Code: "+responseCode);
+                Unirest.setTimeouts(0, 0);
+                HttpResponse<String> response = Unirest.post(smsOtpUrl)
+                        .header("Content-Type", "application/json")
+                        .body("{\r\n  \"api_key\" : \""+smsOtpApiKey+"\",\r\n \"message_type\" : \"NUMERIC\",\r\n  \"to\" : \""+phoneNumber+"\",\r\n       \"from\" : \""+senderId+"\",\r\n       \"channel\" : \""+smsOtpChannel+"\",\r\n       \"pin_attempts\" : 3,\r\n       \"pin_time_to_live\" :  5,\r\n       \"pin_length\" : 6,\r\n       \"pin_placeholder\" : \"<1234>\",\r\n       \"message_text\" : \"Welcome to Kiddiesave! Use this OTP <1234> to complete your registration. OTP expires in "+smsOtpExpiryTime+" minutes."+"\",\r\n       \"pin_type\" : \"NUMERIC\"\r\n   }\r\n      ")
+                        .asString();
 
-                // display response to console
-               try(BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(),"utf-8")))
-               {
-                   response = new StringBuilder();
-                   while((responseLine = br.readLine()) != null)
-                   {
-                       response.append(responseLine.trim());
-                   }
-               }
-    return response.toString();*/
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(smsOtpUrl);
-
-       // String json = "{"id":1,"name":"John"}";
-        // replace the above with a parsed json object
-        ObjectMapper mapper = new ObjectMapper();
-        //Converting the Object to JSONString
-        String jsonString = mapper.writeValueAsString(validatePhoneNumber);
-        StringEntity entity = new StringEntity(jsonString);
-        httpPost.setEntity(entity);
-        httpPost.setHeader("Accept", "application/json");
-        httpPost.setHeader("Content-type", "application/json");
-
-        CloseableHttpResponse response = client.execute(httpPost);
-      // assertThat(response.getStatusLine().getStatusCode(), equalTo(200));
-        int responseCode = response.getStatusLine().getStatusCode();
-        System.out.println(responseCode);
-        System.out.println(response);
-        client.close();
-
-        return "The response is: "+response;
+        return response.getBody();
     }
 }

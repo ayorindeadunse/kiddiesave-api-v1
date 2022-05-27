@@ -2,6 +2,7 @@ package com.kiddiesave.kiddiesave.controllers;
 
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumberRequest;
 import com.kiddiesave.kiddiesave.services.ValidationServiceRestImpl;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +24,9 @@ public class ValidationController {
 
     @PostMapping("/generateotp")
     public ResponseEntity<?> ValidatePhoneNumber(@Valid @RequestBody ValidatePhoneNumberRequest validatePhoneNumberRequest)
-            throws IOException {
+            throws UnirestException {
 
         String otp = validationServiceRest.sendOTPCode(validatePhoneNumberRequest.getPhone());
        return ResponseEntity.ok(otp);
-      //  return null;
     }
 }
