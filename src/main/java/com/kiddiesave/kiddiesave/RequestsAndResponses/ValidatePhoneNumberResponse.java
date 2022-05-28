@@ -9,7 +9,8 @@ public class ValidatePhoneNumberResponse
 {
     private String pinId;
     private String smsStatus;
+    private String to;
     private int status;
-    private int attemptsRemaining;
-    private boolean verified;
+ //   private int attemptsRemaining;
+  // private boolean verified;
 }
