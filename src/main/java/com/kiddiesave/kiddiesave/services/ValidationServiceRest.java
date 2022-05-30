@@ -7,4 +7,5 @@ import java.io.IOException;
 
 public interface ValidationServiceRest {
     ValidatePhoneNumberResponse sendOTPCode(String phoneNumber) throws IOException, UnirestException;
+    ValidatePhoneNumberResponse validateOTPCode(String pinId, String code) throws IOException, UnirestException;
 }

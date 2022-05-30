@@ -8,6 +8,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,6 +20,8 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
 
     @Value("${SmsOtpUrl}")
     private String smsOtpUrl;
+    @Value("${SmsOtpVerify}")
+    private String smsOtpVerify;
     @Value("${SmsOtpApiKey}")
     private String smsOtpApiKey;
     @Value("${SmsOtpSenderId}")
@@ -44,7 +47,15 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
                 ValidatePhoneNumberResponse otpResponse = gson.fromJson(String.valueOf(response.getBody()), ValidatePhoneNumberResponse.class);
 return otpResponse;
             }
+
+    // Sms Otp Verify
+    public ValidatePhoneNumberResponse validateOTPCode(String pinId, String code) throws IOException, UnirestException
+    {
+        return null;
+    }
 }
+
+
 
 class LocalDateAdapter implements JsonSerializer<LocalDate> {
 
