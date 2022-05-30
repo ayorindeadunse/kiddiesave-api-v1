@@ -14,9 +14,9 @@ import java.util.Date;
 public class PhoneValidationServiceImpl implements PhoneValidationService {
 
     @Autowired
-    PhoneNumberRepository phoneNumberRepository;
+    private final PhoneNumberRepository phoneNumberRepository;
     @Autowired
-    ValidationServiceRestImpl validationServiceRest;
+    private final ValidationServiceRestImpl validationServiceRest;
 
     public PhoneValidationServiceImpl(PhoneNumberRepository phoneNumberRepository,ValidationServiceRestImpl validationServiceRest) {
         this.phoneNumberRepository = phoneNumberRepository;

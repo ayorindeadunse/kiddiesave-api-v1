@@ -7,6 +7,7 @@ import com.kiddiesave.kiddiesave.services.PhoneValidationServiceImpl;
 import com.kiddiesave.kiddiesave.services.ValidationServiceRestImpl;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/validation")
@@ -34,6 +34,8 @@ public class ValidationController {
 
             // Mobile number validation already handled by regex in model
             String pin = phoneValidationService.generatePhoneValidationCode(validatePhoneNumberRequest);
+            phoneValidationService.savePhoneNumber(validatePhoneNumberRequest.getPhone());
+
             if(pin != null) {
                 return ResponseEntity.ok(new ApiResponse(true, "Otp sent successfully!", pin));
             }
@@ -45,5 +47,5 @@ public class ValidationController {
 
     }
 
-    // Validate OTP Code
+    // Validate OTP Codeokl
 }
