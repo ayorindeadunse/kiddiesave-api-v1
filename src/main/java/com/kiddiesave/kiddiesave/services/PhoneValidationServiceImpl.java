@@ -3,7 +3,7 @@ package com.kiddiesave.kiddiesave.services;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumberRequest;
 import com.kiddiesave.kiddiesave.entity.PhoneRecord;
 
-public class ValidateServiceImpl implements ValidationService{
+public class PhoneValidationServiceImpl implements PhoneValidationService {
 
     @Override
     public String generatePhoneValidationCode(ValidatePhoneNumberRequest request) {
