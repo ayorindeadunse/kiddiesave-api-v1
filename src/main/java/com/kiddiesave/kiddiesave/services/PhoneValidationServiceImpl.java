@@ -30,12 +30,11 @@ public class PhoneValidationServiceImpl implements PhoneValidationService {
     }
 
     @Override
-    public PhoneRecord savePhoneNumber(String phone) {
+    public void savePhoneNumber(String phone) {
         PhoneRecord pr = new PhoneRecord();
         pr.setPhone(phone);
         pr.setDateCreated(new Date());
 
-       PhoneRecord savePhoneNumber  = phoneNumberRepository.save(pr);
-       return savePhoneNumber;
+        phoneNumberRepository.save(pr);
     }
 }
