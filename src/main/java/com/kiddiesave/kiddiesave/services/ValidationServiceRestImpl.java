@@ -1,6 +1,7 @@
 package com.kiddiesave.kiddiesave.services;
 
 import com.google.gson.*;
+import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidateOTPResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumberResponse;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -49,9 +50,20 @@ return otpResponse;
             }
 
     // Sms Otp Verify
-    public ValidatePhoneNumberResponse validateOTPCode(String pinId, String code) throws IOException, UnirestException
+    public ValidateOTPResponse validateOTPCode(String pinId, String code) throws IOException, UnirestException
     {
-        return null;
+        Unirest.setTimeouts(0,0);
+        HttpResponse<String> response = Unirest.post(smsOtpVerify)
+                .header("Content-Type","application/json")
+                .body("{\r\n  \"api_key\": \""+smsOtpApiKey+"\",\r\n    \"pin_id\": \""+pinId+"\",\r\n    \"pin\": \""+code+"\"\r\n\t}")
+                .asString();
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .create();
+
+        ValidateOTPResponse validResponse = gson.fromJson(String.valueOf(response.getBody()),ValidateOTPResponse.class);
+        return validResponse;
     }
 }
 

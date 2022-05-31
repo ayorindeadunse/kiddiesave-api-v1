@@ -5,10 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ValidatePhoneNumberResponse
+public class ValidateOTPResponse
 {
     private String pinId;
-    private String smsStatus;
-    private String to;
-    private int status;
+    private String verified;
+    private String msisdn; // Phone Number
 }
