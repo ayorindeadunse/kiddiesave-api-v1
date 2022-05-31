@@ -1,5 +1,6 @@
 package com.kiddiesave.kiddiesave.services;
 
+import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidateOTPResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumberRequest;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumberResponse;
 import com.kiddiesave.kiddiesave.entity.PhoneRecord;
@@ -8,6 +9,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Date;
 
 @Service
@@ -36,5 +38,11 @@ public class PhoneValidationServiceImpl implements PhoneValidationService {
         pr.setDateCreated(new Date());
 
         phoneNumberRepository.save(pr);
+    }
+
+    @Override
+    public ValidateOTPResponse verifyOTP(String pinId, String code) throws UnirestException, IOException {
+        ValidateOTPResponse validateOTPResponse = validationServiceRest.validateOTPCode(pinId,code);
+        return validateOTPResponse;
     }
 }
