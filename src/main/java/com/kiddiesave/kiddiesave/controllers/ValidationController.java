@@ -57,6 +57,10 @@ public class ValidationController {
                     HttpStatus.INTERNAL_SERVER_ERROR); //create exception object to be logged in app insights that shows the message that pin is required and shouldn't be expired
         }
         ValidateOTPResponse validateOTPResponse = phoneValidationService.verifyOTP(validateOTPRequest.getPinId(), validateOTPRequest.getCode());
+        if(validateOTPResponse.getVerified() == "false")
+        {
+            return ResponseEntity.ok(new ApiResponse(false, "Otp  verification failed!", validateOTPResponse));
+        }
         return ResponseEntity.ok(new ApiResponse(true, "Otp verified successfully!", validateOTPResponse));
     }
 }
