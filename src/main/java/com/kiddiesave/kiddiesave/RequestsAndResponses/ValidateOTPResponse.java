@@ -9,5 +9,5 @@ public class ValidateOTPResponse
 {
     private String pinId;
     private String verified;
-    private String msisdn; // Phone Number
+    private String msisdn;
 }
