@@ -1,12 +1,15 @@
 package com.kiddiesave.kiddiesave.security.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 public class HelperUtil {
 
     private static String GenerateBvnReference()
     {
-        return "";
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        return "BVN"+ RandomString(4) + df;
     }
 
     private static String RandomString(int length)
