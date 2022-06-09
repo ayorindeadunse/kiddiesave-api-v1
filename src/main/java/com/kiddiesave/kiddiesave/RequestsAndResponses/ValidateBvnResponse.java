@@ -20,6 +20,10 @@ public class ValidateBvnResponse {
     private BvnData bvnData;
 }
 
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 class BvnData
 {
     private String lastName;
@@ -29,12 +33,4 @@ class BvnData
     private String middleName;
     private String bvn;
 
-    BvnData(String lastName, String gender, String firstName, String dateOfBirth, String middleName, String bvn) {
-        this.lastName = lastName;
-        this.gender = gender;
-        this.firstName = firstName;
-        this.dateOfBirth = dateOfBirth;
-        this.middleName = middleName;
-        this.bvn = bvn;
-    }
 }
