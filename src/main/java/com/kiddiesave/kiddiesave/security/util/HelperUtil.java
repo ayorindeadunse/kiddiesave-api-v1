@@ -1,5 +1,6 @@
 package com.kiddiesave.kiddiesave.security.util;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -8,8 +9,9 @@ public class HelperUtil {
 
     private static String GenerateBvnReference()
     {
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-        return "BVN"+ RandomString(4) + df;
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = new Date();
+        return "BVN"+ RandomString(4) + dateFormat.format(date);
     }
 
     private static String RandomString(int length)
