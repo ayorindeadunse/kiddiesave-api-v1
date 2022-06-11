@@ -10,8 +10,5 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class ValidateBvnRequest {
-    private String email;
      private String bvn;
-     private String reference;
-     private boolean status;
 }

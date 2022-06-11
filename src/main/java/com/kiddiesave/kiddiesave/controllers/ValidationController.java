@@ -63,4 +63,6 @@ public class ValidationController {
         }
         return ResponseEntity.ok(new ApiResponse(true, "Otp verified successfully!", validateOTPResponse));
     }
+
+    //Verify BVN
 }

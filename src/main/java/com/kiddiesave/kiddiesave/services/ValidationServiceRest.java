@@ -9,4 +9,6 @@ import java.io.IOException;
 public interface ValidationServiceRest {
     ValidatePhoneNumberResponse sendOTPCode(String phoneNumber) throws IOException, UnirestException;
     ValidateOTPResponse validateOTPCode(String pinId, String code) throws IOException, UnirestException;
+    // validate bvn api 1
+    
 }
