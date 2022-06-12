@@ -69,7 +69,21 @@ return otpResponse;
 
     @Override
     public BvnValidationResponse bvnLookup(String bvn) throws IOException, UnirestException {
-        return null;
+                /*** refactor logic
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, "{\"bvn\":\"22142574229\"}");
+        Request request = new Request.Builder()
+                .url("https://api.withmono.com/v2/lookup/bvn")
+                .post(body)
+                .addHeader("Accept", "application/json")
+                .addHeader("mono-sec-key", "test_sk_nuGIi7lcFgPrOhOX1Xm6")
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        Response response = client.newCall(request).execute();***/
+                return  null;
     }
 }
 
