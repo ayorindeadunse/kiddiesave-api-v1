@@ -1,6 +1,7 @@
 package com.kiddiesave.kiddiesave.services;
 
 import com.google.gson.*;
+import com.kiddiesave.kiddiesave.RequestsAndResponses.BvnValidationResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidateOTPResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumberResponse;
 import com.mashape.unirest.http.HttpResponse;
@@ -64,6 +65,11 @@ return otpResponse;
 
         ValidateOTPResponse validResponse = gson.fromJson(String.valueOf(response.getBody()),ValidateOTPResponse.class);
         return validResponse;
+    }
+
+    @Override
+    public BvnValidationResponse bvnLookup(String bvn) throws IOException, UnirestException {
+        return null;
     }
 }
 
