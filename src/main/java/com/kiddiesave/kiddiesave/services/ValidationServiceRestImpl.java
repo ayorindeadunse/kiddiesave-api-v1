@@ -76,7 +76,7 @@ return otpResponse;
                 Unirest.setTimeouts(0,0);
                 HttpResponse<String> response = Unirest.post(bvnValidationUrl)
                         .header("Content-Type","application/json")
-                        .header("mono-secret-key",monoSecretKey)
+                        .header("mono-sec-key",monoSecretKey)
                         .body("{\r\n  \"bvn\": \""+bvn+"\"")
                         .asString();
 
