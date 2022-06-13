@@ -32,6 +32,10 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
     private String smsOtpChannel;
     @Value("${SmsOtpExpiryTime}")
     private String smsOtpExpiryTime;
+    @Value("${BvnValidationUrl}")
+    private String bvnValidationUrl;
+    @Value("${MonoTestSecKey}")
+    private String monoSecretKey;
 
             public ValidatePhoneNumberResponse sendOTPCode(String phoneNumber) throws UnirestException {
 
@@ -69,21 +73,19 @@ return otpResponse;
 
     @Override
     public BvnValidationResponse bvnLookup(String bvn) throws IOException, UnirestException {
-                /*** refactor logic
-        OkHttpClient client = new OkHttpClient();
+                Unirest.setTimeouts(0,0);
+                HttpResponse<String> response = Unirest.post(bvnValidationUrl)
+                        .header("Content-Type","application/json")
+                        .header("mono-secret-key",monoSecretKey)
+                        .body("{\r\n  \"bvn\": \""+bvn+"\"")
+                        .asString();
 
-        MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\"bvn\":\"22142574229\"}");
-        Request request = new Request.Builder()
-                .url("https://api.withmono.com/v2/lookup/bvn")
-                .post(body)
-                .addHeader("Accept", "application/json")
-                .addHeader("mono-sec-key", "test_sk_nuGIi7lcFgPrOhOX1Xm6")
-                .addHeader("Content-Type", "application/json")
-                .build();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .create();
 
-        Response response = client.newCall(request).execute();***/
-                return  null;
+        BvnValidationResponse bvnValidationResponse = gson.fromJson(String.valueOf(response.getBody()),BvnValidationResponse.class);
+        return bvnValidationResponse;
     }
 }
 
