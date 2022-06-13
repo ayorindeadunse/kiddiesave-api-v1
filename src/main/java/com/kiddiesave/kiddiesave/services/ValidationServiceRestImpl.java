@@ -1,7 +1,7 @@
 package com.kiddiesave.kiddiesave.services;
 
 import com.google.gson.*;
-import com.kiddiesave.kiddiesave.RequestsAndResponses.BvnValidationResponse;
+import com.kiddiesave.kiddiesave.RequestsAndResponses.BvnLookupServiceResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidateOTPResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumberResponse;
 import com.mashape.unirest.http.HttpResponse;
@@ -72,7 +72,7 @@ return otpResponse;
     }
 
     @Override
-    public BvnValidationResponse bvnLookup(String bvn) throws IOException, UnirestException {
+    public BvnLookupServiceResponse bvnLookup(String bvn) throws IOException, UnirestException {
                 Unirest.setTimeouts(0,0);
                 HttpResponse<String> response = Unirest.post(bvnValidationUrl)
                         .header("Content-Type","application/json")
@@ -84,8 +84,8 @@ return otpResponse;
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                 .create();
 
-        BvnValidationResponse bvnValidationResponse = gson.fromJson(String.valueOf(response.getBody()),BvnValidationResponse.class);
-        return bvnValidationResponse;
+        BvnLookupServiceResponse bvnLookupServiceResponse = gson.fromJson(String.valueOf(response.getBody()), BvnLookupServiceResponse.class);
+        return bvnLookupServiceResponse;
     }
 }
 

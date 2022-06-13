@@ -1,10 +1,9 @@
 package com.kiddiesave.kiddiesave.controllers;
 
 import com.kiddiesave.kiddiesave.RequestsAndResponses.*;
-import com.kiddiesave.kiddiesave.services.BvnValidationServiceImpl;
+import com.kiddiesave.kiddiesave.services.BvnLookupServiceImpl;
 import com.kiddiesave.kiddiesave.services.PhoneValidationServiceImpl;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,11 +19,11 @@ import java.io.IOException;
 public class ValidationController {
 
     private final PhoneValidationServiceImpl phoneValidationService;
-    private final BvnValidationServiceImpl bvnValidationService;
+    private final BvnLookupServiceImpl bvnLookupService;
 
-    public ValidationController(PhoneValidationServiceImpl phoneValidationService,BvnValidationServiceImpl bvnValidationService) {
+    public ValidationController(PhoneValidationServiceImpl phoneValidationService, BvnLookupServiceImpl bvnLookupService) {
         this.phoneValidationService = phoneValidationService;
-        this.bvnValidationService = bvnValidationService;
+        this.bvnLookupService = bvnLookupService;
     }
 
     //Allow anonymous
@@ -77,7 +76,7 @@ public class ValidationController {
             return new ResponseEntity(new ApiResponse(false, "Bvn is required", HttpStatus.BAD_REQUEST),
                     HttpStatus.BAD_REQUEST);
         }
-        BvnValidationResponse bvnValResponse =bvnValidationService.verifyBvn(validateBvnRequest.getBvn());
-        return ResponseEntity.ok(new ApiResponse(true,"Bvn details returned successfully!",bvnValResponse));
+        BvnLookupServiceResponse bvnLookupServiceResponse =bvnLookupService.bvnLookup(validateBvnRequest.getBvn());
+        return ResponseEntity.ok(new ApiResponse(true,"Bvn details returned successfully!",bvnLookupServiceResponse));
     }
 }

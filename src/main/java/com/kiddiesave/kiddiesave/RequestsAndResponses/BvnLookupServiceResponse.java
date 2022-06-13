@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 
-public class BvnValidationResponse {
+public class BvnLookupServiceResponse {
 
         private String title;
         private String fullName;
