@@ -93,14 +93,9 @@ return otpResponse;
                 .create();
 
         BvnLookupServiceResponse bvnLookupServiceResponse = gson.fromJson((response.body().string()), BvnLookupServiceResponse.class);
-
-       // System.out.println(response.body().string()); // this is working. convert to object.
         return bvnLookupServiceResponse;
-
     }
 }
-
-
 
 class LocalDateAdapter implements JsonSerializer<LocalDate> {
 
