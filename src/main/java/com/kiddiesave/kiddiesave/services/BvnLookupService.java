@@ -8,6 +8,5 @@ import okhttp3.ResponseBody;
 import java.io.IOException;
 
 public interface BvnLookupService {
-  //  BvnLookupServiceResponse bvnLookup(String bvn) throws UnirestException, IOException;
-    BvnLookupServiceResponse response(String bvn) throws UnirestException,IOException;
+    BvnLookupServiceResponse bvnLookup(String bvn) throws IOException;
 }

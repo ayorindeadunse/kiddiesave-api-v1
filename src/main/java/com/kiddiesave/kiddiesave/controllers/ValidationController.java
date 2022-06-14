@@ -76,7 +76,7 @@ public class ValidationController {
             return new ResponseEntity(new ApiResponse(false, "Bvn is required", HttpStatus.BAD_REQUEST),
                     HttpStatus.BAD_REQUEST);
         }
-        BvnLookupServiceResponse bvnLookupServiceResponse =bvnLookupService.response(validateBvnRequest.getBvn());
+        BvnLookupServiceResponse bvnLookupServiceResponse =bvnLookupService.bvnLookup(validateBvnRequest.getBvn());
         return ResponseEntity.ok(new ApiResponse(true,"Bvn details returned successfully!",bvnLookupServiceResponse));
     }
 }

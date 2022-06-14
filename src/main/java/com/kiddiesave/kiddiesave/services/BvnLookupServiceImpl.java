@@ -26,9 +26,8 @@ public class BvnLookupServiceImpl implements BvnLookupService {
     }*/
 
     @Override
-    public BvnLookupServiceResponse response(String bvn) throws IOException {
-        //  BvnLookupServiceResponse bvnValidationResponse = validationServiceRest.bvnLookup(bvn);
-        BvnLookupServiceResponse response = validationServiceRest.bvnLookup(bvn);
-        return response;
+    public BvnLookupServiceResponse bvnLookup(String bvn) throws IOException {
+        BvnLookupServiceResponse bvnLookupServiceResponse = validationServiceRest.bvnLookup(bvn);
+        return bvnLookupServiceResponse;
     }
 }
