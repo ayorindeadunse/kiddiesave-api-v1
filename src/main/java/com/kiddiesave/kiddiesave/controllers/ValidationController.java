@@ -28,7 +28,7 @@ public class ValidationController {
 
     //Allow anonymous
     @PostMapping("/phone")
-    public ResponseEntity<?> ValidatePhoneNumber(@Valid @RequestBody ValidatePhoneNumberRequest validatePhoneNumberRequest)
+    public ResponseEntity<?> sendOtpCode(@Valid @RequestBody ValidatePhoneNumberRequest validatePhoneNumberRequest)
             throws UnirestException {
 
             // Mobile number validation already handled by regex in model
@@ -48,7 +48,7 @@ public class ValidationController {
 
     // Validate OTP Codeokl
     @PostMapping("/phone/verify")
-    public ResponseEntity<?> ValidatePhoneNumber(@Valid @RequestBody ValidateOTPRequest validateOTPRequest) throws UnirestException, IOException {
+    public ResponseEntity<?> validatePhoneNumber(@Valid @RequestBody ValidateOTPRequest validateOTPRequest) throws UnirestException, IOException {
         if(validateOTPRequest.getCode() == null)
         {
             return new ResponseEntity(new ApiResponse(false, "OTP to be verified cannot be null or empty", HttpStatus.BAD_REQUEST),
@@ -69,7 +69,7 @@ public class ValidationController {
 
     //Verify BVN
     @PostMapping("/bvnlookup")
-    public ResponseEntity<?> ValidateBvn(@Valid @RequestBody ValidateBvnRequest validateBvnRequest) throws IOException
+    public ResponseEntity<?> bvnLookUp(@Valid @RequestBody ValidateBvnRequest validateBvnRequest) throws IOException
     {
         if(validateBvnRequest == null)
         {
