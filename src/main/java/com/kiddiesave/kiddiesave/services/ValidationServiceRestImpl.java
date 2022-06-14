@@ -81,7 +81,6 @@ return otpResponse;
         Request request = new Request.Builder()
                 .url(bvnValidationUrl)
                 .post(body)
-               // .addHeader("Accept", "application/json")
                 .addHeader("mono-sec-key", monoSecretKey)
                 .addHeader("Content-Type", "application/json")
                 .build();
