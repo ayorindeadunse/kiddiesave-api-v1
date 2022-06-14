@@ -77,12 +77,12 @@ return otpResponse;
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\"bvn\":\"22142574229\"}");
+        RequestBody body = RequestBody.create(mediaType, "{\"bvn\":\""+bvn+"\"}");
         Request request = new Request.Builder()
-                .url("https://api.withmono.com/v2/lookup/bvn")
+                .url(bvnValidationUrl)
                 .post(body)
                // .addHeader("Accept", "application/json")
-                .addHeader("mono-sec-key", "test_sk_nuGIi7lcFgPrOhOX1Xm6")
+                .addHeader("mono-sec-key", monoSecretKey)
                 .addHeader("Content-Type", "application/json")
                 .build();
 
