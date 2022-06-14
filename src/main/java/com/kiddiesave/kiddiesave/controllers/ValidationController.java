@@ -68,15 +68,15 @@ public class ValidationController {
     }
 
     //Verify BVN
-    @PostMapping("/bvn")
-    public ResponseEntity<?> ValidateBvn(@Valid @RequestBody ValidateBvnRequest validateBvnRequest) throws UnirestException,IOException
+    @PostMapping("/bvnlookup")
+    public ResponseEntity<?> ValidateBvn(@Valid @RequestBody ValidateBvnRequest validateBvnRequest) throws IOException
     {
         if(validateBvnRequest == null)
         {
             return new ResponseEntity(new ApiResponse(false, "Bvn is required", HttpStatus.BAD_REQUEST),
                     HttpStatus.BAD_REQUEST);
         }
-        BvnLookupServiceResponse bvnLookupServiceResponse =bvnLookupService.bvnLookup(validateBvnRequest.getBvn());
+        BvnLookupServiceResponse bvnLookupServiceResponse =bvnLookupService.response(validateBvnRequest.getBvn());
         return ResponseEntity.ok(new ApiResponse(true,"Bvn details returned successfully!",bvnLookupServiceResponse));
     }
 }

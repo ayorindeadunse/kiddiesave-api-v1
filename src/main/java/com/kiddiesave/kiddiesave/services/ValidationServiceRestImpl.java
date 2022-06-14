@@ -7,6 +7,7 @@ import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumberRespons
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -72,20 +73,30 @@ return otpResponse;
     }
 
     @Override
-    public BvnLookupServiceResponse bvnLookup(String bvn) throws IOException, UnirestException {
-                Unirest.setTimeouts(0,0);
-                HttpResponse<String> response = Unirest.post(bvnValidationUrl)
-                        .header("Content-Type","application/json")
-                        .header("mono-sec-key",monoSecretKey)
-                        .body("{\r\n  \"bvn\": \""+bvn+"\"")
-                        .asString();
+    public BvnLookupServiceResponse bvnLookup(String bvn) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, "{\"bvn\":\"22142574229\"}");
+        Request request = new Request.Builder()
+                .url("https://api.withmono.com/v2/lookup/bvn")
+                .post(body)
+               // .addHeader("Accept", "application/json")
+                .addHeader("mono-sec-key", "test_sk_nuGIi7lcFgPrOhOX1Xm6")
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        Response response = client.newCall(request).execute();
 
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                 .create();
 
-        BvnLookupServiceResponse bvnLookupServiceResponse = gson.fromJson(String.valueOf(response.getBody()), BvnLookupServiceResponse.class);
+        BvnLookupServiceResponse bvnLookupServiceResponse = gson.fromJson((response.body().string()), BvnLookupServiceResponse.class);
+
+       // System.out.println(response.body().string()); // this is working. convert to object.
         return bvnLookupServiceResponse;
+
     }
 }
 
