@@ -14,7 +14,7 @@ import lombok.ToString;
 public class BvnLookupServiceResponse {
 
         private String title;
-        private String fullName;
+        private String full_name;
         private String firstName;
         private String middleName;
         private String lastName;
