@@ -1,14 +1,13 @@
 package com.kiddiesave.kiddiesave.services;
 
 import com.kiddiesave.kiddiesave.RequestsAndResponses.BvnLookupServiceResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
 public class BvnLookupServiceImpl implements BvnLookupService {
-    @Autowired
+
     private final ValidationServiceRestImpl validationServiceRest;
 
     public BvnLookupServiceImpl(ValidationServiceRestImpl validationServiceRest) {
