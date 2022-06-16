@@ -46,7 +46,7 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
                         .body("{\r\n  \"api_key\" : \""+smsOtpApiKey+"\",\r\n \"message_type\" : \"NUMERIC\",\r\n  \"to\" : \""+phoneNumber+"\",\r\n       \"from\" : \""+senderId+"\",\r\n       \"channel\" : \""+smsOtpChannel+"\",\r\n       \"pin_attempts\" : 3,\r\n       \"pin_time_to_live\" :  5,\r\n       \"pin_length\" : 6,\r\n       \"pin_placeholder\" : \"<1234>\",\r\n       \"message_text\" : \"Welcome to Kiddiesave! Use this OTP <1234> to complete your registration. OTP expires in "+smsOtpExpiryTime+" minutes."+"\",\r\n       \"pin_type\" : \"NUMERIC\"\r\n   }\r\n      ")
                         .asString();
 
-        //desirialize the response to json object
+        //deserialize string response back to json
                 Gson gson = new GsonBuilder()
                         .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                         .create();
@@ -56,7 +56,7 @@ return otpResponse;
             }
 
     // Sms Otp Verify
-    public ValidateOTPResponse validateOTPCode(String pinId, String code) throws IOException, UnirestException
+    public ValidateOTPResponse validateOTPCode(String pinId, String code) throws UnirestException
     {
         Unirest.setTimeouts(0,0);
         HttpResponse<String> response = Unirest.post(smsOtpVerify)
