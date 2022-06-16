@@ -27,7 +27,7 @@ public class ValidationController {
     }
 
     //Allow anonymous
-    @PostMapping("/phone")
+    @PostMapping("/otp/phone")
     public ResponseEntity<?> sendOtpCode(@Valid @RequestBody ValidatePhoneNumberRequest validatePhoneNumberRequest)
             throws UnirestException {
 
