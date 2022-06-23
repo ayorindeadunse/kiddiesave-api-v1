@@ -47,6 +47,7 @@ public class User {
     private boolean isBvnValidated;
     private boolean isPhoneValidated;
     private boolean isPushNotifications;
+    private boolean isEmailValidated;
     private String NotificationId;
     private String pinHash;
     private String pinSalt;
@@ -80,6 +81,15 @@ public class User {
         this.phoneNumberLinkedWithBvn = phoneNumberLinkedWithBvn;
         this.dob = dob;
         this.country = country;
+
+    }
+
+    public boolean isEmailValidated() {
+        return isEmailValidated;
+    }
+
+    public void setEmailValidated(boolean emailValidated) {
+        isEmailValidated = emailValidated;
     }
 
     public Long getId() {
