@@ -25,4 +25,9 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
         emailValidationDataRepository.save(val);
 
     }
+
+    @Override
+    public String sendValidationEmail(ValidateEmailRequest request) {
+        return null;
+    }
 }
