@@ -6,10 +6,12 @@ import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.EmailValidationDataRepository;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.UUID;
 
+@Service
 public class ValidateEmailServiceImpl implements ValidateEmailService{
 
     private final EmailValidationDataRepository emailValidationDataRepository;
