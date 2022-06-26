@@ -49,6 +49,7 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
              */
             // save data in database
             request.setRequestId(requestId);
+            //has request id before saving in database(consider)
             saveEmailValidationRequest(request);
             return "Email successfully sent to user";
         }
