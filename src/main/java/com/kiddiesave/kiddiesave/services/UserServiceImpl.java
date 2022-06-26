@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
             newUser.setDateUpdated(new Date());
             newUser.setBvnValidated(true); // remember bvn validation check
             newUser.setPhoneValidated(true);
-            newUser.setStatus(true);
+            newUser.setStatus(false); // set to true after user has been email validated(see below)
             newUser.setEmailValidated(false);
             userRepository.save(newUser);
             logger.info("User "+ user.getFirstName() + "  "+ "  "+user.getMiddleName() + "  "+user.getLastName() + " successfully added.");
