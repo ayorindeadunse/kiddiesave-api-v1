@@ -35,8 +35,8 @@ public class User {
     private String gender;
     private String country;
     private String notified;
-    private int accessFailedCount;
-    private boolean lockedOutEnabled;
+    private Integer accessFailedCount;
+    private Boolean lockedOutEnabled;
     private String address;
     private String referralName;
     private String referralPhoneNo;
@@ -44,14 +44,14 @@ public class User {
     private Date dateUpdated;
     private String deviceId;
     private String refreshToken;
-    private boolean isBvnValidated;
-    private boolean isPhoneValidated;
-    private boolean isPushNotifications;
-    private boolean isEmailValidated;
+    private Boolean isBvnValidated;
+    private Boolean isPhoneValidated;
+    private Boolean isPushNotifications;
+    private Boolean isEmailValidated;
     private String NotificationId;
     private String pinHash;
     private String pinSalt;
-    private boolean status;
+    private Boolean status;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
