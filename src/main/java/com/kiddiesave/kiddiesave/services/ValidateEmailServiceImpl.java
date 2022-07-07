@@ -6,6 +6,7 @@ import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.EmailValidationDataRepository;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,6 +18,7 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
     private final EmailValidationDataRepository emailValidationDataRepository;
     private final UserRepository userRepository;
 
+    @Autowired
     public ValidateEmailServiceImpl(EmailValidationDataRepository emailValidationDataRepository, UserRepository userRepository) {
         this.emailValidationDataRepository = emailValidationDataRepository;
         this.userRepository = userRepository;

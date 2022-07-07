@@ -6,6 +6,7 @@ import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumberRespons
 import com.kiddiesave.kiddiesave.entity.PhoneRecord;
 import com.kiddiesave.kiddiesave.repository.PhoneNumberRepository;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ public class PhoneValidationServiceImpl implements PhoneValidationService {
     private final PhoneNumberRepository phoneNumberRepository;
     private final ValidationServiceRestImpl validationServiceRest;
 
+    @Autowired
     public PhoneValidationServiceImpl(PhoneNumberRepository phoneNumberRepository,ValidationServiceRestImpl validationServiceRest) {
         this.phoneNumberRepository = phoneNumberRepository;
         this.validationServiceRest = validationServiceRest;
