@@ -21,8 +21,14 @@ public class EmailServiceImpl implements EmailService{
     }
 
     @Override
-    public void sendEmail(EmailModel emailModel) {
-
+    public void sendEmail(EmailModel emailModel) throws MessagingException {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,true);
+        helper.setSubject(emailModel.getSubject());
+        helper.setFrom(env.getProperty("sprng.mail.username"));
+        helper.setTo(emailModel.getTo());
+        helper.setText(emailModel.getMessage());
+        mailSender.send(helper.getMimeMessage());
     }
 
     @Override
