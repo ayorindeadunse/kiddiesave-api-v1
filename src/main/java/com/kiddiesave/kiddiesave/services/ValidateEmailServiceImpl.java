@@ -17,11 +17,13 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
 
     private final EmailValidationDataRepository emailValidationDataRepository;
     private final UserRepository userRepository;
+    private final EmailServiceImpl emailService;
 
     @Autowired
-    public ValidateEmailServiceImpl(EmailValidationDataRepository emailValidationDataRepository, UserRepository userRepository) {
+    public ValidateEmailServiceImpl(EmailServiceImpl emailService,EmailValidationDataRepository emailValidationDataRepository, UserRepository userRepository) {
         this.emailValidationDataRepository = emailValidationDataRepository;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
 
@@ -52,6 +54,7 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
             /**send validation email
              * *
              */
+
             // save data in database
             request.setRequestId(requestId);
             //has request id before saving in database(consider)
