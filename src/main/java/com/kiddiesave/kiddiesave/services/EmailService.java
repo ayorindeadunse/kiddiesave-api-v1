@@ -5,6 +5,6 @@ import com.kiddiesave.kiddiesave.models.EmailModel;
 import javax.mail.MessagingException;
 
 public interface EmailService {
-    void sendEmail(EmailModel emailModel) throws MessagingException;
-    void sendEmailWithAttachment(EmailModel emailModel) throws MessagingException;
+    void sendEmail(String recipientEmail) throws MessagingException;
+    void sendEmailWithAttachment(String recipientEmail,String attachment) throws MessagingException;
 }

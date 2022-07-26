@@ -54,7 +54,7 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
             /**send validation email
              * *
              */
-
+           // emailService.sendEmail();
             // save data in database
             request.setRequestId(requestId);
             //has request id before saving in database(consider)
