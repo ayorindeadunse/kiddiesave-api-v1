@@ -10,6 +10,7 @@ import com.kiddiesave.kiddiesave.security.JWTUtil;
 import com.kiddiesave.kiddiesave.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +32,7 @@ public class AuthController {
    private JWTUtil jwtUtil;
    private AuthenticationManager authManager;
 
+   @Autowired
     public AuthController(UserRepository userRepository, JWTUtil jwtUtil, AuthenticationManager authManager) {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;

@@ -7,6 +7,7 @@ import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
 import com.kiddiesave.kiddiesave.security.util.Claims;
 import com.kiddiesave.kiddiesave.services.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class UserController {
     private UserRepository userRepository;
     private Claims claims;
 
+    @Autowired
     public UserController(UserServiceImpl userServiceImpl, UserRepository userRepository, Claims claims) {
         this.userServiceImpl = userServiceImpl;
         this.userRepository = userRepository;
@@ -37,6 +39,7 @@ public class UserController {
                     "Please check your email to activate your account. ",user));
             // remember to include logic for email activation.
         } else {
+            //return 500
             return ResponseEntity.ok(new ApiResponse(false,"User registration failed",null));// or return
         }
     }

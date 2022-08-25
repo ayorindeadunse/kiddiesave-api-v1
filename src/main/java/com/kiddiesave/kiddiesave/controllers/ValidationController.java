@@ -4,6 +4,7 @@ import com.kiddiesave.kiddiesave.RequestsAndResponses.*;
 import com.kiddiesave.kiddiesave.services.BvnLookupServiceImpl;
 import com.kiddiesave.kiddiesave.services.PhoneValidationServiceImpl;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ public class ValidationController {
     private final PhoneValidationServiceImpl phoneValidationService;
     private final BvnLookupServiceImpl bvnLookupService;
 
+    @Autowired
     public ValidationController(PhoneValidationServiceImpl phoneValidationService, BvnLookupServiceImpl bvnLookupService) {
         this.phoneValidationService = phoneValidationService;
         this.bvnLookupService = bvnLookupService;
@@ -46,7 +48,7 @@ public class ValidationController {
 
     }
 
-    // Validate OTP Codeokl
+    // Validate OTP Code ok
     @PostMapping("/phone/verify")
     public ResponseEntity<?> validatePhoneNumber(@Valid @RequestBody ValidateOTPRequest validateOTPRequest) throws UnirestException, IOException {
         if(validateOTPRequest.getCode() == null)

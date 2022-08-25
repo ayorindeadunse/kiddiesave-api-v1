@@ -13,7 +13,7 @@ import java.util.Properties;
 
 @SpringBootApplication
 @Configuration
-@EntityScan("com.kiddiesave.Kiddiesave.models") // path of the entity model
+@EntityScan("com.kiddiesave.Kiddiesave.entity") // path of the entity model
 @EnableJpaRepositories("com.kiddiesave.kiddiesave.repository") //path  of jpa repository
 public class KiddiesaveApplication {
 

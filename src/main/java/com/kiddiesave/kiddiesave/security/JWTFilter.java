@@ -20,11 +20,16 @@ import java.io.IOException;
 @Service
 public class JWTFilter extends OncePerRequestFilter {
 
-   @Autowired
     private JWTUtil jwtUtil;
-   @Autowired
     private UserDetailsServiceImpl userDetailsService;
-   private static final Logger logger = LoggerFactory.getLogger(JWTFilter.class);
+
+    @Autowired
+    public JWTFilter(JWTUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
+        this.jwtUtil = jwtUtil;
+        this.userDetailsService = userDetailsService;
+    }
+
+    private static final Logger logger = LoggerFactory.getLogger(JWTFilter.class);
 
    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

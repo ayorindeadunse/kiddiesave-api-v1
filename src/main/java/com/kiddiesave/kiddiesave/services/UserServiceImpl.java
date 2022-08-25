@@ -113,6 +113,18 @@ public class UserServiceImpl implements UserService {
             newUser.setPhoneValidated(true);
             newUser.setStatus(false); // set to true after user has been email validated(see below)
             newUser.setEmailValidated(false);
+            newUser.setAccessFailedCount(0);
+            newUser.setLockedOutEnabled(false);
+            newUser.setPushNotifications(true);
+            newUser.setNotificationId("1"); //test. create method to generate notification id.
+            newUser.setPinHash("");
+            newUser.setPinSalt("");
+            newUser.setNotified("");
+            newUser.setNin("");
+            newUser.setReferralName("");
+            newUser.setReferralPhoneNo("");
+            newUser.setRefreshToken("");
+
             userRepository.save(newUser);
             logger.info("User "+ user.getFirstName() + "  "+ "  "+user.getMiddleName() + "  "+user.getLastName() + " successfully added.");
 
