@@ -36,7 +36,7 @@ public class UserController {
         if (user.getId() > 0) {
             // consider sending a token to the client so frontend can use as logic to send user to dashboard.
             return ResponseEntity.ok(new ApiResponse(true, "User registered successfully! " +
-                    "Please check your email to activate your account. ",user));
+                    "Please check your email to activate your account. ",signupRequest));
             // remember to include logic for email activation.
         } else {
             //return 500
