@@ -58,6 +58,7 @@ public class UserController {
                 return ResponseEntity.ok(new MessageResponse("User update successful. "));
             }
         }
+        //return a different HTTP Status code
         return ResponseEntity.ok(new MessageResponse("An error occurred. Wrong user credentials for required for update. "));
 
     }
