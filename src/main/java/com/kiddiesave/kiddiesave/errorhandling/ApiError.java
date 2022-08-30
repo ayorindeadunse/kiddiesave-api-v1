@@ -1,4 +1,4 @@
-package com.kiddiesave.kiddiesave.error;
+package com.kiddiesave.kiddiesave.errorhandling;
 
 import org.springframework.http.HttpStatus;
 
