@@ -8,6 +8,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
@@ -75,6 +76,17 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     {
         logger.info(ex.getClass().getName());
         final String error = ex.getRequestPartName() + " part is missing";
+        final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),error);
+        return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestParameter(final MissingServletRequestParameterException ex,
+                                                                          final HttpHeaders headers,final HttpStatus status,
+                                                                          final WebRequest webRequest)
+    {
+        logger.info(ex.getClass().getName());
+        final String error = ex.getParameterName() + " parameter is missing";
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),error);
         return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
     }
