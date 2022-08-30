@@ -52,4 +52,9 @@ public class ApiError {
     public void setErrors(final List<String> errors) {
         this.errors = errors;
     }
+
+    public void setError(final String error)
+    {
+        errors = Arrays.asList(error);
+    }
 }
