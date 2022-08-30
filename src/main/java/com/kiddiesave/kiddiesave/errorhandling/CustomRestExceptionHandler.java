@@ -16,6 +16,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,4 +104,22 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST,ex.getLocalizedMessage(),error);
         return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
     }
+
+    @ExceptionHandler({ConstraintViolationException.class})
+    public ResponseEntity<Object> handleConstraintViolation(final ConstraintViolationException ex,
+                                                            final WebRequest webRequest)
+    {
+        logger.info(ex.getClass().getName());
+        final List<String> errors = new ArrayList<String>();
+        for(final ConstraintViolation<?> violation : ex.getConstraintViolations())
+        {
+            errors.add(violation.getRootBeanClass().getName() + " " + violation.getPropertyPath() + ": " + violation.getMessage());
+        }
+        final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),errors);
+        return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
+    }
+
+    //404
+
+    
 }
