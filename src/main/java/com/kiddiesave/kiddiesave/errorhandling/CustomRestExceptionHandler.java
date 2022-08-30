@@ -1,5 +1,6 @@
 package com.kiddiesave.kiddiesave.errorhandling;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.ConstraintViolation;
@@ -121,5 +123,15 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     //404
 
-    
+    @Override
+    protected ResponseEntity<Object> handleNoHandlerFoundException(final NoHandlerFoundException ex,
+                                                                   final HttpHeaders headers,
+                                                                   final HttpStatus status,
+                                                                   final WebRequest webRequest)
+    {
+        logger.info(ex.getClass().getName());
+        final String error = "No handler found for " + ex.getHttpMethod() + " " + ex.getRequestURL();
+        final ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), error);
+        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
 }
