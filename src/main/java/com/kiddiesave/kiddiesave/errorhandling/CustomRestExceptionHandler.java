@@ -10,6 +10,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.ArrayList;
@@ -65,5 +66,16 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         final String error = ex.getValue() + " value for " + ex.getPropertyName() + " should be of type " + ex.getRequiredType();
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
         return new ResponseEntity<Object>(apiError, new HttpHeaders(),apiError.getStatus());
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestPart(final MissingServletRequestPartException ex,
+                                                                     final HttpHeaders headers, final HttpStatus status,
+                                                                     final WebRequest webrequest)
+    {
+        logger.info(ex.getClass().getName());
+        final String error = ex.getRequestPartName() + " part is missing";
+        final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),error);
+        return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
     }
 }
