@@ -1,4 +1,6 @@
 package com.kiddiesave.kiddiesave.errorhandling;
 
-public class CustomRestExceptionHandler {
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 }
