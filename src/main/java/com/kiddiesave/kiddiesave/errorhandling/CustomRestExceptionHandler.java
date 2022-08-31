@@ -8,11 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
@@ -152,4 +154,23 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         final ApiError apiError = new ApiError(HttpStatus.METHOD_NOT_ALLOWED,ex.getLocalizedMessage(),builder.toString());
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
+
+    // 415
+    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(final HttpMediaTypeNotSupportedException ex,
+                                                                     final HttpHeaders headers,
+                                                                     final HttpStatus status,
+                                                                     final WebRequest webRequest)
+    {
+        logger.info(ex.getClass().getName());
+        final  StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(ex.getContentType());
+        stringBuilder.append(ex.getContentType());
+        stringBuilder.append(" media type is not supported. Supported media types are ");
+        ex.getSupportedMediaTypes().forEach(t -> stringBuilder.append(t + " "));
+
+        final ApiError apiError = new ApiError(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getLocalizedMessage(),
+                stringBuilder.substring(0, stringBuilder.length() - 2));
+        return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
+    }
+
 }
