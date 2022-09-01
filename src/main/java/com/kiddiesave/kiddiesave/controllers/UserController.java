@@ -30,7 +30,6 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    @ResponseStatus(HttpStatus.CREATED) //check
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws ApplicationException, UserNotFoundException {
 
         User user = userServiceImpl.createUser(signupRequest);
