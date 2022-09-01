@@ -41,6 +41,7 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
     // method to send the actual e-mail
     @Override
     public String sendValidationEmail(ValidateEmailRequest request) {
+        // use custom exception handler
         try
         {
             // get user

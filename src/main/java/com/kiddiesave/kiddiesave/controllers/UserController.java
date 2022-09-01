@@ -30,18 +30,20 @@ public class UserController {
     }
 
     @PostMapping("/signup")
+    @ResponseStatus(HttpStatus.CREATED) //check
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws ApplicationException, UserNotFoundException {
 
         User user = userServiceImpl.createUser(signupRequest);
-        if (user.getId() > 0) {
+        if (user.getId() > 0)
             // consider sending a token to the client so frontend can use as logic to send user to dashboard.
             return ResponseEntity.ok(new ApiResponse(true, "User registered successfully! " +
                     "Please check your email to activate your account. ",signupRequest));
             // remember to include logic for email activation.
-        } else {
+         /*else {
             //return 500
             return ResponseEntity.ok(new ApiResponse(false,"User registration failed",null));// or return
-        }
+        }*/
+        return null;
     }
 
     // edit user
