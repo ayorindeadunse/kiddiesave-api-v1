@@ -30,8 +30,8 @@ public class SignUpRequest {
     private Set<String> role;
     private String title;
     @NotNull
-    @Size(min = 13,message = "The minimum length of the mobile number should be 13.")
-    private int mobile;
+    @Size(min = 13,message = "The minimum length of the mobile number should be 13 characters.")
+    private String mobile;
     @NotNull(message="Date of Birth is required")
     private String dob;
 
@@ -126,11 +126,11 @@ public class SignUpRequest {
         this.title = title;
     }
 
-    public int getMobile() {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setMobile(int mobile) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 

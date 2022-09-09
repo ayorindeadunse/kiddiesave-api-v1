@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     @Transactional
-    public User createUser(SignUpRequest user) throws UsernameNotFoundException, ApplicationException, UserNotFoundException {
+    public User createUser(SignUpRequest user) {
             //alternate course of action, validate bvn and use that to fetch fields to register user;
 
        /* User usr = userRepository.getUserByEmail(user.getEmail());

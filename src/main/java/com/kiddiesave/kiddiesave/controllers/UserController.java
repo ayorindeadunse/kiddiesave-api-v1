@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws ApplicationException, UserNotFoundException {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest){
 
         // Check if the object is null
         User user = userServiceImpl.createUser(signupRequest);

@@ -28,7 +28,7 @@ public class User {
     private String bvn;
     private String title;
     private String nin;
-    private int phoneNumberLinkedWithBvn;
+    private String phoneNumberLinkedWithBvn;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -69,7 +69,7 @@ public class User {
 
 
     public User(String email, String password, String bvn, String firstName, String middleName, String lastName,
-                String address, String gender, String country, String title,int phoneNumberLinkedWithBvn, Date dob) {
+                String address, String gender, String country, String title,String phoneNumberLinkedWithBvn, Date dob) {
         this.email = email;
         this.password = password;
         this.address = address;
@@ -141,11 +141,11 @@ public class User {
         this.nin = nin;
     }
 
-    public int getPhoneNumberLinkedWithBvn() {
+    public String getPhoneNumberLinkedWithBvn() {
         return phoneNumberLinkedWithBvn;
     }
 
-    public void setPhoneNumberLinkedWithBvn(int phoneNumberLinkedWithBvn) {
+    public void setPhoneNumberLinkedWithBvn(String phoneNumberLinkedWithBvn) {
         this.phoneNumberLinkedWithBvn = phoneNumberLinkedWithBvn;
     }
 
