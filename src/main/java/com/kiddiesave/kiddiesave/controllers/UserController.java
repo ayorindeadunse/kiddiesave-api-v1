@@ -2,7 +2,6 @@ package com.kiddiesave.kiddiesave.controllers;
 
 import com.kiddiesave.kiddiesave.RequestsAndResponses.*;
 import com.kiddiesave.kiddiesave.entity.User;
-import com.kiddiesave.kiddiesave.errorhandling.ApiError;
 import com.kiddiesave.kiddiesave.exceptions.ApplicationException;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
