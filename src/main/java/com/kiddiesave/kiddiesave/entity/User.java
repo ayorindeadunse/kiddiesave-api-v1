@@ -2,7 +2,6 @@ package com.kiddiesave.kiddiesave.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +14,8 @@ import java.util.Date;
 @Table(name = "users",uniqueConstraints = {
         @UniqueConstraint(columnNames = "email"),
         @UniqueConstraint(columnNames = "phoneNumberLinkedWithBvn"),
-        @UniqueConstraint(columnNames = "bvn")
+        @UniqueConstraint(columnNames = "bvn"),
+        @UniqueConstraint(columnNames = "nin")
 })
 public class User {
     @Id
@@ -28,7 +28,7 @@ public class User {
     private String bvn;
     private String title;
     private String nin;
-    private String phoneNumberLinkedWithBvn;
+    private int phoneNumberLinkedWithBvn;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -69,7 +69,7 @@ public class User {
 
 
     public User(String email, String password, String bvn, String firstName, String middleName, String lastName,
-                String address, String gender, String country, String title, String phoneNumberLinkedWithBvn, Date dob) {
+                String address, String gender, String country, String title,int phoneNumberLinkedWithBvn, Date dob) {
         this.email = email;
         this.password = password;
         this.address = address;
@@ -141,11 +141,11 @@ public class User {
         this.nin = nin;
     }
 
-    public String getPhoneNumberLinkedWithBvn() {
+    public int getPhoneNumberLinkedWithBvn() {
         return phoneNumberLinkedWithBvn;
     }
 
-    public void setPhoneNumberLinkedWithBvn(String phoneNumberLinkedWithBvn) {
+    public void setPhoneNumberLinkedWithBvn(int phoneNumberLinkedWithBvn) {
         this.phoneNumberLinkedWithBvn = phoneNumberLinkedWithBvn;
     }
 

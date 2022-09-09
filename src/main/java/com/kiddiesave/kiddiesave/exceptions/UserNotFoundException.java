@@ -1,6 +1,6 @@
 package com.kiddiesave.kiddiesave.exceptions;
 
-public class UserNotFoundException extends Exception{
+public class UserNotFoundException extends RuntimeException{
     private Long userid;
     private String email;
     private String mobile;

@@ -5,57 +5,34 @@ import java.util.Set;
 
 public class SignUpRequest {
 
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @NotNull(message="email address is required")
     @Size(max = 40)
-    @Email
+    @Email(message="Please enter a valid e-mail address")
     private String email;
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @NotNull(message="password is required")
     @Size(min = 6, max = 20)
     @Pattern(regexp="\"^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$\"",message="length must be 8 characters, with at least  one uppercase letter, lower case letter and one special character")
     private String password;
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @NotNull(message="bvn is required")
     private String bvn;
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @NotNull(message="First name is required")
     private String firstName;
     private String middleName;
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @NotNull(message="Last name is required")
     private String lastName;
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @NotNull(message="address is required")
     private String address;
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @NotNull(message="Gender is required")
     private String gender;
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @NotNull(message="Country is required")
     private String country;
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @NotNull(message="The role is required")
     private Set<String> role;
     private String title;
-    @NotBlank
     @NotNull
-    @NotEmpty
-    @Size(min = 13,message = "The minimum length of the mobile number should be 13 and start with 234.")
-    @Pattern(regexp = "^234\\d{10}",message = "The minimum length of the mobile number should be 13 and start with 234.")
-    private String mobile;
-    @NotBlank
-    @NotNull
-    @NotEmpty
+    @Size(min = 13,message = "The minimum length of the mobile number should be 13.")
+    private int mobile;
+    @NotNull(message="Date of Birth is required")
     private String dob;
 
     public SignUpRequest() {
@@ -149,11 +126,11 @@ public class SignUpRequest {
         this.title = title;
     }
 
-    public String getMobile() {
+    public int getMobile() {
         return mobile;
     }
 
-    public void setMobile(String mobile) {
+    public void setMobile(int mobile) {
         this.mobile = mobile;
     }
 

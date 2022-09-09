@@ -2,17 +2,21 @@ package com.kiddiesave.kiddiesave.controllers;
 
 import com.kiddiesave.kiddiesave.RequestsAndResponses.*;
 import com.kiddiesave.kiddiesave.entity.User;
+import com.kiddiesave.kiddiesave.errorhandling.ApiError;
 import com.kiddiesave.kiddiesave.exceptions.ApplicationException;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
 import com.kiddiesave.kiddiesave.security.util.Claims;
 import com.kiddiesave.kiddiesave.services.UserServiceImpl;
+import io.swagger.annotations.ResponseHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/user")
@@ -32,17 +36,12 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws ApplicationException, UserNotFoundException {
 
+        // Check if the object is null
         User user = userServiceImpl.createUser(signupRequest);
-        if (user.getId() > 0)
             // consider sending a token to the client so frontend can use as logic to send user to dashboard.
             return ResponseEntity.ok(new ApiResponse(true, "User registered successfully! " +
                     "Please check your email to activate your account. ",signupRequest));
             // remember to include logic for email activation.
-         /*else {
-            //return 500
-            return ResponseEntity.ok(new ApiResponse(false,"User registration failed",null));// or return
-        }*/
-        return null;
     }
 
     // edit user

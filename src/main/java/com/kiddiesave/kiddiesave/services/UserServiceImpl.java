@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -49,17 +50,17 @@ public class UserServiceImpl implements UserService {
     public User createUser(SignUpRequest user) throws UsernameNotFoundException, ApplicationException, UserNotFoundException {
             //alternate course of action, validate bvn and use that to fetch fields to register user;
 
-        User usr = userRepository.getUserByEmail(user.getEmail());
+       /* User usr = userRepository.getUserByEmail(user.getEmail());
         if(usr != null)
         {
             throw new ApplicationException("The user already exists.");
         }
-        // check if bvn exists
+
         User usr1 = userRepository.getUserByBvn(user.getBvn());
         if(usr1 != null)
         {
             throw new ApplicationException("User with the bvn already exists.");
-        }
+        }*/
         // check for referral (for later)
 
         // Validate bvn

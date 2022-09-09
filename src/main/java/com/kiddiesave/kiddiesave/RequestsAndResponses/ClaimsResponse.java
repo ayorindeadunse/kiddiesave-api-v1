@@ -20,7 +20,7 @@ public class ClaimsResponse {
     private String email;
     private String address;
     private Set<Role> roles;
-    private String mobile;
+    private int mobile;
     private String bvn;
     private String gender;
     private Date dob;
