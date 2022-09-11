@@ -3,12 +3,14 @@ package com.kiddiesave.kiddiesave.services;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidateEmailRequest;
 import com.kiddiesave.kiddiesave.entity.EmailValidationData;
 import com.kiddiesave.kiddiesave.entity.User;
+import com.kiddiesave.kiddiesave.exceptions.ApplicationException;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.EmailValidationDataRepository;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -40,33 +42,46 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
 
     // method to send the actual e-mail
     @Override
-    public String sendValidationEmail(ValidateEmailRequest request) {
+    public String sendValidationEmail(String userEmail) throws MessagingException {
         // use custom exception handler
-        try
-        {
+       // try
+       // {
             // get user
-            User u = userRepository.getUserByEmail(request.getEmail());
-            if(u == null || !u.isStatus())
+            User u = userRepository.getUserByEmail(userEmail);
+            if(u == null)
             {
                 throw new UserNotFoundException("User does not exist");
             }
+            else if(u.isStatus() == true)
+            {
+                throw new ApplicationException("User e-mail has already been validated");
+            }
             UUID uuid = UUID.randomUUID();
             String requestId = uuid.toString();
+            //Generate validate email url
+            String validationUrl = "http://localhost:8080/api/validation/"+userEmail+"/"+requestId;
+
             /**send validation email
-             * *
+             * * As  the email error is giving too many connections. Simulate storing the
+             * user email in the database with the reference number and calling the endpoint to activate
+             * the user account.
              */
-           // emailService.sendEmail(); // try implementation 2022 -07 - 27 //add sendgrid implementation afterwards
+
+          //  emailService.sendEmail(userEmail,validationUrl); // try implementation 2022 -07 - 27 //add sendgrid implementation afterwards
             // save data in database
-            request.setRequestId(requestId);
+          //  request.setRequestId(requestId);
             //has request id before saving in database(consider)
-            saveEmailValidationRequest(request);
+            ValidateEmailRequest validateEmailRequest = new ValidateEmailRequest();
+            validateEmailRequest.setEmail(userEmail);
+            validateEmailRequest.setRequestId(requestId);
+            saveEmailValidationRequest(validateEmailRequest);
             return "Email successfully sent to user";
-        }
+       // }
         // catch custom validation exception here
-        catch(Exception e)
-        {
-            System.out.println("Failure to send validation e-mail "  + e);
-        }
-        return null;
+      //  catch(Exception e)
+     //   {
+      //      System.out.println("Failure to send validation e-mail "  + e);
+    //    }
+     //   return null;
     }
 }

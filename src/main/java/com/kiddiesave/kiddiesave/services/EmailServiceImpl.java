@@ -1,8 +1,11 @@
 package com.kiddiesave.kiddiesave.services;
 
 import com.kiddiesave.kiddiesave.models.EmailModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -13,26 +16,28 @@ import java.io.File;
 @Service
 public class EmailServiceImpl implements EmailService{
     JavaMailSender mailSender;
-    private Environment env;
+   // private Environment env;
+   @Value("${spring.mail.username}")
+   private String username;
 
-    public EmailServiceImpl(JavaMailSender mailSender, Environment env) {
+   @Autowired
+    public EmailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
-        this.env = env;
+       // this.env = env;
     }
 
     @Override
     //public void sendEmail(EmailModel emailModel) throws MessagingException {
-            public void sendEmail(String recipientEmail) throws MessagingException {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,true);
-        //helper.setSubject(emailModel.getSubject());
-        helper.setSubject("Email Validation");
-        helper.setFrom(env.getProperty("sprng.mail.username"));
-       // helper.setTo(emailModel.getTo());
-        helper.setTo(recipientEmail);
-       // helper.setText(emailModel.getMessage());
-        helper.setText("Test message");
-        mailSender.send(helper.getMimeMessage());
+            public void sendEmail(String recipientEmail,String validationUrl) throws MessagingException {
+
+       SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom(username);
+        simpleMailMessage.setTo(recipientEmail);
+        simpleMailMessage.setText(validationUrl);
+        simpleMailMessage.setSubject("Email Validation");
+        mailSender.send(simpleMailMessage);
+        // Put recipient’s address
+
     }
 
     @Override
@@ -43,7 +48,7 @@ public class EmailServiceImpl implements EmailService{
        // helper.setSubject(emailModel.getSubject());
         helper.setSubject("Email Validation");
        // helper.setFrom(emailModel.getFrom());
-        helper.setFrom(env.getProperty("sprng.mail.username"));
+        helper.setFrom(username);
        // helper.setTo(emailModel.getTo());
         helper.setTo(recipientEmail);
        // helper.setText(emailModel.getMessage());

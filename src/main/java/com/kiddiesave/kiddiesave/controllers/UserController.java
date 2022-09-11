@@ -7,12 +7,15 @@ import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 import com.kiddiesave.kiddiesave.repository.UserRepository;
 import com.kiddiesave.kiddiesave.security.util.Claims;
 import com.kiddiesave.kiddiesave.services.UserServiceImpl;
+import com.kiddiesave.kiddiesave.services.ValidateEmailServiceImpl;
 import io.swagger.annotations.ResponseHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -24,23 +27,30 @@ public class UserController {
     private UserServiceImpl userServiceImpl;
     private UserRepository userRepository;
     private Claims claims;
+    private ValidateEmailServiceImpl validateEmailService;
 
     @Autowired
-    public UserController(UserServiceImpl userServiceImpl, UserRepository userRepository, Claims claims) {
+    public UserController(UserServiceImpl userServiceImpl, UserRepository userRepository, Claims claims,
+                          ValidateEmailServiceImpl validateEmailService) {
         this.userServiceImpl = userServiceImpl;
         this.userRepository = userRepository;
         this.claims = claims;
+        this.validateEmailService = validateEmailService;
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest){
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws MessagingException {
 
         // Check if the object is null
         SignUpResponse user = userServiceImpl.createUser(signupRequest);
-            // consider sending a token to the client so frontend can use as logic to send user to dashboard.
+        // consider sending a token to the client so frontend can use as logic to send user to dashboard.
+        // send validation email
+        String message = validateEmailService.sendValidationEmail(signupRequest.getEmail());
+        if (message.equalsIgnoreCase("Email successfully sent to user")) {
             return ResponseEntity.ok(new ApiResponse(true, "User registered successfully! " +
-                    "Please check your email to activate your account. ",user));
-            // remember to include logic for email activation.
+                    "Please check your email to activate your account. ", user));
+        }
+        return null;
     }
 
     // edit user

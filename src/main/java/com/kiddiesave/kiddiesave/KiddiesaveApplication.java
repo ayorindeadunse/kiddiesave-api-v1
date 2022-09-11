@@ -1,5 +1,6 @@
 package com.kiddiesave.kiddiesave;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -16,27 +17,34 @@ import java.util.Properties;
 @EntityScan("com.kiddiesave.Kiddiesave.entity") // path of the entity model
 @EnableJpaRepositories("com.kiddiesave.kiddiesave.repository") //path  of jpa repository
 public class KiddiesaveApplication {
+	@Value("${spring.mail.host}")
+	private String host;
+	@Value("${spring.mail.port}")
+	private String port;
+	@Value("${spring.mail.username}")
+	private String username;
+	@Value("${spring.mail.password}")
+	private String password;
 
+	//private Environment env;
 
-	private Environment env;
-
-	public KiddiesaveApplication(Environment env) {
-		this.env = env;
+	public KiddiesaveApplication() {
 	}
 
 	public JavaMailSender getMailSender()
 	{
 		// java mail inmplementation
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		mailSender.setHost(env.getProperty("spring.mail.host"));
-		mailSender.setPort(Integer.valueOf(env.getProperty("spring.mail.port")));
-		mailSender.setUsername(env.getProperty("spring.mail.username"));
-		mailSender.setPassword(env.getProperty("spring.mail.password"));
+		mailSender.setHost(host);
+		mailSender.setPort(Integer.valueOf(port));
+		mailSender.setUsername(username);
+		mailSender.setPassword(password);
 
 		Properties javaMailProperties = new Properties();
 		javaMailProperties.put("mail.smtp.starttls.enable","true");
 		javaMailProperties.put("mail.smtp.auth","true");
 		javaMailProperties.put("mail.transport.protocol","smtp");
+		//javaMailProperties.put( "mail.smtp.ssl.enable",true);
 		javaMailProperties.put("mail.debug","true");
 
 		mailSender.setJavaMailProperties(javaMailProperties);
