@@ -11,7 +11,7 @@ public class SignUpRequest {
     private String email;
     @NotNull(message="password is required")
     @Size(min = 6, max = 20)
-    @Pattern(regexp="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",message="length must be 8 characters, with at least  one uppercase letter, lower case letter and one special character")
+    @Pattern(regexp="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",message="length must be 8 characters, with at least  one uppercase letter, lower case letter, one number and one special character")
     private String password;
     @NotNull(message="bvn is required")
     private String bvn;

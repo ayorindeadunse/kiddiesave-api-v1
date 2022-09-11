@@ -1,6 +1,7 @@
 package com.kiddiesave.kiddiesave.services;
 
 import com.kiddiesave.kiddiesave.RequestsAndResponses.SignUpRequest;
+import com.kiddiesave.kiddiesave.RequestsAndResponses.SignUpResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.UpdateUserRequest;
 import com.kiddiesave.kiddiesave.entity.Role;
 import com.kiddiesave.kiddiesave.entity.User;
@@ -49,20 +50,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User createUser(SignUpRequest user) {
             //alternate course of action, validate bvn and use that to fetch fields to register user;
-
-       /* User usr = userRepository.getUserByEmail(user.getEmail());
-        if(usr != null)
-        {
-            throw new ApplicationException("The user already exists.");
-        }
-
-        User usr1 = userRepository.getUserByBvn(user.getBvn());
-        if(usr1 != null)
-        {
-            throw new ApplicationException("User with the bvn already exists.");
-        }*/
-        // check for referral (for later)
-
         // Validate bvn
 
             User newUser = new User(user.getEmail(),
@@ -116,6 +103,9 @@ public class UserServiceImpl implements UserService {
             newUser.setEmailValidated(false);
 
             userRepository.save(newUser);
+            // add to Sign Up Response and send to user
+        SignUpResponse signUpResponse = new SignUpResponse();
+
             logger.info("User "+ user.getFirstName() + "  "+ "  "+user.getMiddleName() + "  "+user.getLastName() + " successfully added.");
 
             return newUser;
