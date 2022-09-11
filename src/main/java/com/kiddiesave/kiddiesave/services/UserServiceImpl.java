@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     @Transactional
-    public User createUser(SignUpRequest user) {
+    public SignUpResponse createUser(SignUpRequest user) {
             //alternate course of action, validate bvn and use that to fetch fields to register user;
         // Validate bvn
 
@@ -105,10 +105,21 @@ public class UserServiceImpl implements UserService {
             userRepository.save(newUser);
             // add to Sign Up Response and send to user
         SignUpResponse signUpResponse = new SignUpResponse();
+        signUpResponse.setEmail(user.getEmail());
+        signUpResponse.setFirstName(user.getFirstName());
+        signUpResponse.setMiddleName(user.getMiddleName());
+        signUpResponse.setCountry(user.getCountry());
+        signUpResponse.setDob(user.getDob());
+        signUpResponse.setBvn(user.getBvn());
+        signUpResponse.setGender(user.getGender());
+        signUpResponse.setRole(user.getRole());
+        signUpResponse.setAddress(user.getAddress());
+        signUpResponse.setTitle(user.getTitle());
+        signUpResponse.setMobile(user.getMobile());
 
             logger.info("User "+ user.getFirstName() + "  "+ "  "+user.getMiddleName() + "  "+user.getLastName() + " successfully added.");
 
-            return newUser;
+            return signUpResponse;
     }
     @Override
     @Transactional
