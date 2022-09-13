@@ -8,12 +8,15 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import java.io.IOException;
 
 @RestController
+@Validated
 @RequestMapping("/api/validation")
 public class ValidationController {
 
@@ -50,8 +53,13 @@ public class ValidationController {
     }
 
     @GetMapping("/validateemail/{email}/{requestId}")
-    public ResponseEntity<?> validateUserEmail(@PathVariable String email, @PathVariable String requestId)
+    public ResponseEntity<?> validateUserEmail(@PathVariable  @Email(message="Please pass a valid e-mail address") String email, @PathVariable String requestId)
     {
+        //validate e-mail and requestI
+        if(email == null || requestId == null)
+        {
+            return ResponseEntity.badRequest().build();
+        }
         String response = validateEmailService.validateUserEmail(email,requestId);
         if(response.equalsIgnoreCase("User email successfully validated. Please login to the app."))
             return ResponseEntity.ok(new ApiResponse(true, response,null));
