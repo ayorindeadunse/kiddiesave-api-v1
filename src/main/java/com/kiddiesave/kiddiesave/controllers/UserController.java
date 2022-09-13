@@ -8,19 +8,13 @@ import com.kiddiesave.kiddiesave.repository.UserRepository;
 import com.kiddiesave.kiddiesave.security.util.Claims;
 import com.kiddiesave.kiddiesave.services.UserServiceImpl;
 import com.kiddiesave.kiddiesave.services.ValidateEmailServiceImpl;
-import io.swagger.annotations.ResponseHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.net.URI;
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/user")
@@ -53,15 +47,6 @@ public class UserController {
                     "Please check your email to activate your account. ", user));
         }
         return null;
-    }
-
-    @GetMapping("/validateemail/{email}/{requestId}")
-    public ResponseEntity<?> validateUserEmail(@PathVariable String email, @PathVariable String requestId)
-    {
-        String response = validateEmailService.validateUserEmail(email,requestId);
-        if(response.equalsIgnoreCase("User email successfully validated. Please login to the app."))
-            return ResponseEntity.ok(new ApiResponse(true, response,null));
-    return null;
     }
 
     // edit user

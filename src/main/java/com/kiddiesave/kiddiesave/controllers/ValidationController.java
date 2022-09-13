@@ -3,14 +3,12 @@ package com.kiddiesave.kiddiesave.controllers;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.*;
 import com.kiddiesave.kiddiesave.services.BvnLookupServiceImpl;
 import com.kiddiesave.kiddiesave.services.PhoneValidationServiceImpl;
+import com.kiddiesave.kiddiesave.services.ValidateEmailServiceImpl;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -21,11 +19,14 @@ public class ValidationController {
 
     private final PhoneValidationServiceImpl phoneValidationService;
     private final BvnLookupServiceImpl bvnLookupService;
+    private ValidateEmailServiceImpl validateEmailService;
 
     @Autowired
-    public ValidationController(PhoneValidationServiceImpl phoneValidationService, BvnLookupServiceImpl bvnLookupService) {
+    public ValidationController(PhoneValidationServiceImpl phoneValidationService, BvnLookupServiceImpl bvnLookupService,
+                                ValidateEmailServiceImpl validateEmailService) {
         this.phoneValidationService = phoneValidationService;
         this.bvnLookupService = bvnLookupService;
+        this.validateEmailService = validateEmailService;
     }
 
     //Allow anonymous
@@ -46,6 +47,15 @@ public class ValidationController {
                         HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
+    }
+
+    @GetMapping("/validateemail/{email}/{requestId}")
+    public ResponseEntity<?> validateUserEmail(@PathVariable String email, @PathVariable String requestId)
+    {
+        String response = validateEmailService.validateUserEmail(email,requestId);
+        if(response.equalsIgnoreCase("User email successfully validated. Please login to the app."))
+            return ResponseEntity.ok(new ApiResponse(true, response,null));
+        return null;
     }
 
     // Validate OTP Code ok
