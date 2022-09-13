@@ -84,4 +84,30 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
     //    }
      //   return null;
     }
+
+    @Override
+    public String validateUserEmail(String userEmail, String requestId) {
+        // check if user validation data exists in email_validation_data
+        // if email exists, query user table and update user status
+        // send success to user otherwise throw bad request
+        EmailValidationData emailValidationData =
+                emailValidationDataRepository.findEmailValidationDataByEmailAndRequestId(userEmail,requestId);
+
+        if(emailValidationData != null)
+        {
+            User user = userRepository.getUserByEmail(userEmail);
+            if(user != null)
+            {
+                //update user status
+                user.setEmailValidated(true);
+                userRepository.save(user);
+                //  delete record from email_validation_data table
+                emailValidationDataRepository.deleteEmailValidationDataByEmail(userEmail);
+            }
+            return "User email successfully validated. Please login to the app.";
+        }
+        throw new ApplicationException("User e-mail validation token does not exist or is invalid. Kindly " +
+                "request for new validation email");
+
+    }
 }

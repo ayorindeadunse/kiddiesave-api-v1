@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmailValidationDataRepository extends JpaRepository<EmailValidationData,Long> {
+    EmailValidationData findEmailValidationDataByEmailAndRequestId(String email,String requestId);
+    EmailValidationData deleteEmailValidationDataByEmail(String email);
 }
