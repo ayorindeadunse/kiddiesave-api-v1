@@ -55,12 +55,12 @@ public class UserController {
         return null;
     }
 
-    @GetMapping("/validateemail/{email}/{requestid}")
+    @GetMapping("/validateemail/{email}/{requestId}")
     public ResponseEntity<?> validateUserEmail(@PathVariable String email, @PathVariable String requestId)
     {
         String response = validateEmailService.validateUserEmail(email,requestId);
         if(response.equalsIgnoreCase("User email successfully validated. Please login to the app."))
-            return ResponseEntity.ok(new ApiResponse(true, "Your email has been validated successfully.",null));
+            return ResponseEntity.ok(new ApiResponse(true, response,null));
     return null;
     }
 
