@@ -59,7 +59,7 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
             UUID uuid = UUID.randomUUID();
             String requestId = uuid.toString();
             //Generate validate email url
-            String validationUrl = "http://localhost:8080/api/validation/"+userEmail+"/"+requestId;
+            String validationUrl = "http://localhost:8080/api/validation/validateemail"+userEmail+"/"+requestId;
 
             /**send validation email
              * * As  the email error is giving too many connections. Simulate storing the
