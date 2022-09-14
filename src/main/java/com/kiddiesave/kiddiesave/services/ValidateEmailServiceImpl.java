@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.UUID;
 
@@ -86,6 +87,7 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
     }
 
     @Override
+    @Transactional
     public String validateUserEmail(String userEmail, String requestId) {
         // check if user validation data exists in email_validation_data
         // if email exists, query user table and update user status
@@ -102,7 +104,7 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
                 user.setEmailValidated(true);
                 userRepository.save(user);
                 //  delete record from email_validation_data table
-                emailValidationDataRepository.deleteEmailValidationDataByEmail(userEmail);
+               emailValidationDataRepository.deleteById(emailValidationData.getId());
             }
             return "User email successfully validated. Please login to the app.";
         }
