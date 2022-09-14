@@ -55,7 +55,7 @@ public class ValidationController {
     @GetMapping("/validateemail/{email}/{requestId}")
     public ResponseEntity<?> validateUserEmail(@PathVariable  @Email(message="Please pass a valid e-mail address") String email, @PathVariable String requestId)
     {
-        //validate e-mail and requestI
+        //validate e-mail and requestId
         if(email == null || requestId == null)
         {
             return ResponseEntity.badRequest().build();
