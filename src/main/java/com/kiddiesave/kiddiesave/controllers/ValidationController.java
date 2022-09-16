@@ -44,12 +44,7 @@ public class ValidationController {
             if(pin != null) {
                 return ResponseEntity.ok(new ApiResponse(true, "Otp sent successfully!", pin));
             }
-            else
-            {
-                return new ResponseEntity(new ApiResponse(false, "An Error occurred on the server!", HttpStatus.INTERNAL_SERVER_ERROR),
-                        HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
+            return null;
     }
 
     @GetMapping("/validateemail/{email}/{requestId}")
@@ -58,7 +53,8 @@ public class ValidationController {
         //validate e-mail and requestId
         if(email == null || requestId == null)
         {
-            return ResponseEntity.badRequest().build();
+            return new ResponseEntity(new ApiResponse(false, "Email and request ID are required", HttpStatus.BAD_REQUEST),
+                    HttpStatus.BAD_REQUEST);
         }
         String response = validateEmailService.validateUserEmail(email,requestId);
         if(response.equalsIgnoreCase("User email successfully validated. Please login to the app."))
@@ -69,20 +65,22 @@ public class ValidationController {
     // Validate OTP Code ok
     @PostMapping("/phone/verify")
     public ResponseEntity<?> validatePhoneNumber(@Valid @RequestBody ValidateOTPRequest validateOTPRequest) throws UnirestException, IOException {
-        if(validateOTPRequest.getCode() == null)
+        if(validateOTPRequest.getCode() == null )
         {
             return new ResponseEntity(new ApiResponse(false, "OTP to be verified cannot be null or empty", HttpStatus.BAD_REQUEST),
                     HttpStatus.BAD_REQUEST);
         }
+        // Return 404 here
         if(validateOTPRequest.getPinId() == null)
         {
-            return new ResponseEntity(new ApiResponse(false, "OTP to be verified cannot be null or empty", HttpStatus.INTERNAL_SERVER_ERROR),
-                    HttpStatus.INTERNAL_SERVER_ERROR); //create exception object to be logged in app insights that shows the message that pin is required and shouldn't be expired
+            return new ResponseEntity(new ApiResponse(false, "PIN cannot be null or empty", HttpStatus.BAD_REQUEST),
+                    HttpStatus.BAD_REQUEST); //create exception object to be logged in app insights that shows the message that pin is required and shouldn't be expired
         }
         ValidateOTPResponse validateOTPResponse = phoneValidationService.verifyOTP(validateOTPRequest.getPinId(), validateOTPRequest.getCode());
         if(validateOTPResponse.getVerified() == "false")
         {
-            return ResponseEntity.ok(new ApiResponse(false, "Otp  verification failed!", validateOTPResponse));
+            return new ResponseEntity(new ApiResponse(false, "OTP status cannot be determined", HttpStatus.BAD_REQUEST),
+                    HttpStatus.BAD_REQUEST); //create exception object to be logged in app insights that shows the message that pin is required and shouldn't be expired
         }
         return ResponseEntity.ok(new ApiResponse(true, "Otp verified successfully!", validateOTPResponse));
     }
