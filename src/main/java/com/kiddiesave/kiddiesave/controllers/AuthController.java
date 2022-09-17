@@ -1,5 +1,6 @@
 package com.kiddiesave.kiddiesave.controllers;
 
+import com.kiddiesave.kiddiesave.RequestsAndResponses.ApiResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.JwtResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.LoginRequest;
 import com.kiddiesave.kiddiesave.entity.User;
@@ -11,6 +12,7 @@ import com.kiddiesave.kiddiesave.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,6 +48,13 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
        User user = userRepository.getUserByEmail(loginRequest.getUsernameOrEmail());
+
+       // check user status
+        if(!user.isStatus())
+            return new ResponseEntity(new ApiResponse(false, "" +
+                    "Your profile is inactive, disabled or has been deleted.", HttpStatus.BAD_REQUEST),
+                    HttpStatus.BAD_REQUEST);
+
        String jwt = jwtUtil.generateToken(user);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
