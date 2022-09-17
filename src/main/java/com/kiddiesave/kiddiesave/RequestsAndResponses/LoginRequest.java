@@ -1,11 +1,16 @@
 package com.kiddiesave.kiddiesave.RequestsAndResponses;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class LoginRequest {
-    @NotBlank
+    @NotBlank(message="email address(username) cannot be blank")
+    @NotNull(message="email address(username) is required")
+    @Email(message="email address(username) is invalid")
     private String usernameOrEmail;
-    @NotBlank
+    @NotBlank(message="password cannot be blank")
+    @NotNull(message="password is required")
     private String password;
 
     public String getPassword() {
