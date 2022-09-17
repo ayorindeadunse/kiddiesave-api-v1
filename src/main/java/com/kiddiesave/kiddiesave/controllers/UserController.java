@@ -46,7 +46,8 @@ public class UserController {
             return ResponseEntity.ok(new ApiResponse(true, "User registered successfully! " +
                     "Please check your email to activate your account. ", user));
         }
-        return null;
+        return new ResponseEntity(new ApiResponse(false, "User Registration Failed", HttpStatus.BAD_REQUEST),
+                HttpStatus.BAD_REQUEST);
     }
 
     // edit user
@@ -60,20 +61,23 @@ public class UserController {
             if(editUser != null)
             {
                 // return a success message
-                return ResponseEntity.ok(new MessageResponse("User update successful. "));
+                return ResponseEntity.ok(new MessageResponse("User update successful."));
             }
         }
-        //return a different HTTP Status code
-        return ResponseEntity.ok(new MessageResponse("An error occurred. Wrong user credentials for required for update. "));
+        return new ResponseEntity(new ApiResponse(false, "Error updating user information. Username" +
+                "cannot be null or empty or other parameters are invalid", HttpStatus.BAD_REQUEST),
+                HttpStatus.BAD_REQUEST);
 
     }
 
     // delete/disable user
     @PostMapping(value = "/deleteuser")
-    public ResponseEntity<?> deleteUser(@Valid @RequestBody DeleteUserRequest deleteUserRequest) throws UserNotFoundException, ApplicationException {
-        if(deleteUserRequest.getEmail() != null)
+    public ResponseEntity<?> deleteUser(HttpServletRequest request) throws UserNotFoundException, ApplicationException {
+       // if(deleteUserRequest.getEmail() != null)
+        String usernameOrEmail = claims.getLoggedOnUsername(request);
         {
-            String status = userServiceImpl.deleteUser(deleteUserRequest.getEmail());
+           // String status = userServiceImpl.deleteUser(deleteUserRequest.getEmail());
+            String status = userServiceImpl.deleteUser(usernameOrEmail);
 
          if(status.equalsIgnoreCase("User deleted successfully."))
          {
@@ -81,8 +85,6 @@ public class UserController {
          }
             return ResponseEntity.ok(new MessageResponse(status));
         }
-        return new ResponseEntity(new ApiResponse(false, "An Error occurred on the server!", HttpStatus.INTERNAL_SERVER_ERROR),
-            HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     // count users
@@ -94,7 +96,8 @@ public class UserController {
                 return ResponseEntity.ok(new ApiResponse(true, "User count returned.", userCount));
             }
             else
-                return new ResponseEntity(new ApiResponse(false, "An Error occurred on the server!", HttpStatus.INTERNAL_SERVER_ERROR),
-                        HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity(new ApiResponse(false, "Please" +
+                        "specify an appropriate parameter for the user status i.e, true or false", HttpStatus.BAD_REQUEST),
+                        HttpStatus.BAD_REQUEST);
         }
 }
