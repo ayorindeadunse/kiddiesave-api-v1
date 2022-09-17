@@ -4,35 +4,46 @@ import javax.validation.constraints.*;
 import java.util.Set;
 
 public class SignUpRequest {
-
+    @NotBlank(message="email address cannot be blank")
     @NotNull(message="email address is required")
     @Size(max = 40)
     @Email(message="Please enter a valid e-mail address")
     private String email;
     @NotNull(message="password is required")
+    @NotBlank(message="password cannot be blank")
     @Size(min = 6, max = 20)
     @Pattern(regexp="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",message="length must be 8 characters, with at least  one uppercase letter, lower case letter, one number and one special character")
     private String password;
     @NotNull(message="bvn is required")
+    @NotBlank(message="bvn cannot be blank")
     private String bvn;
     @NotNull(message="First name is required")
+    @NotBlank(message="First name cannot be blank")
     private String firstName;
     private String middleName;
     @NotNull(message="Last name is required")
+    @NotBlank(message="Last name cannot be blank")
     private String lastName;
-    @NotNull(message="address is required")
+    @NotNull(message="Address is required")
+    @NotBlank(message="Address cannot be blank")
     private String address;
     @NotNull(message="Gender is required")
+    @NotBlank(message="Gender cannot be blank")
     private String gender;
     @NotNull(message="Country is required")
+    @NotBlank(message="Country cannot be blank")
     private String country;
     @NotNull(message="The role is required")
+    @NotBlank(message="The role cannot be blank")
     private Set<String> role;
     private String title;
-    @NotNull
+    @NotNull(message="Mobile number is required")
+    @NotBlank(message="Mobile number cannot be blank")
     @Size(min = 13,message = "The minimum length of the mobile number should be 13 characters.")
     private String mobile;
     @NotNull(message="Date of Birth is required")
+    @NotBlank(message="Date of Birth cannot be blank")
+    // TODO: add validation for date of birth yyyy-mm-dd
     private String dob;
 
     public SignUpRequest() {
