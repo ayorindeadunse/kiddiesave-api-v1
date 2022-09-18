@@ -12,5 +12,6 @@ import lombok.ToString;
 @ToString
 public class UserCountRequest {
 
+    // TODO: Add validation to ensure just boolean fields are allowed
     private Boolean userStatus;
 }

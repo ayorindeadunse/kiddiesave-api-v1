@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class UpdateUserRequest {
-
+// add validations
     private String firstName;
     private String middleName;
     private String lastName;
