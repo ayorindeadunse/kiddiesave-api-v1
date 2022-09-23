@@ -4,7 +4,6 @@ import com.kiddiesave.kiddiesave.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,9 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    //Inject dependencies
-    @Autowired private JWTFilter filter;
-    @Autowired private UserDetailsServiceImpl uds;
+    private final JWTFilter filter;
+    private final UserDetailsServiceImpl uds;
+
+    @Autowired
+    public SecurityConfig(JWTFilter filter,UserDetailsServiceImpl uds)
+    {
+        this.filter = filter;
+        this.uds = uds;
+    }
 
     private static final String[] AUTH_WHITELIST = {
             "/authenticate",
