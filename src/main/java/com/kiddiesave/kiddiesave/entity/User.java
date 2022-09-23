@@ -36,22 +36,20 @@ public class User {
     private String gender;
     private String country;
     private String notified;
-    private Integer accessFailedCount;
-    private Boolean lockedOutEnabled;
+    private Integer accessFailedCount; // handle accessFailedCount during authentication
+    private Boolean lockedOutEnabled; // lockout the user after 3 tries
     private String address;
     private String referralName;
     private String referralPhoneNo;
     private Date dateCreated;
     private Date dateUpdated;
-    private String deviceId;
+    private String deviceId; // set to null but can be updated when making the request from a mobile device
     private String refreshToken;
-    private Boolean isBvnValidated;
-    private Boolean isPhoneValidated;
-    private Boolean isPushNotifications;
-    private Boolean isEmailValidated;
-    private String NotificationId;
-    private String pinHash;
-    private String pinSalt;
+    private Boolean isBvnValidated; // update after bvn is validated
+    private Boolean isPhoneValidated; // update after phone is validated
+    private Boolean isPushNotifications; // set push notifications to false unless explicitly set by user in edit endpoint
+    private Boolean isEmailValidated; // update to true after success call to Email Validation endpoint
+    private String NotificationId; // set to false unless explicitly updated by user after calling the edit endpoint
     private Boolean status;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -307,22 +305,6 @@ public class User {
 
     public void setNotificationId(String notificationId) {
         NotificationId = notificationId;
-    }
-
-    public String getPinHash() {
-        return pinHash;
-    }
-
-    public void setPinHash(String pinHash) {
-        this.pinHash = pinHash;
-    }
-
-    public String getPinSalt() {
-        return pinSalt;
-    }
-
-    public void setPinSalt(String pinSalt) {
-        this.pinSalt = pinSalt;
     }
 
     public boolean isStatus() {
