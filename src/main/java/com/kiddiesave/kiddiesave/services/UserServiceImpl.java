@@ -1,8 +1,6 @@
 package com.kiddiesave.kiddiesave.services;
 
-import com.kiddiesave.kiddiesave.RequestsAndResponses.SignUpRequest;
-import com.kiddiesave.kiddiesave.RequestsAndResponses.SignUpResponse;
-import com.kiddiesave.kiddiesave.RequestsAndResponses.UpdateUserRequest;
+import com.kiddiesave.kiddiesave.RequestsAndResponses.*;
 import com.kiddiesave.kiddiesave.entity.Role;
 import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.entity.UserType;
@@ -17,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -33,18 +32,34 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final DateUtils dateUtils;
+    private final BvnLookupServiceImpl bvnLookupService;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                           RoleRepository roleRepository, DateUtils dateUtils)
+                           RoleRepository roleRepository, DateUtils dateUtils,
+                           BvnLookupServiceImpl bvnLookupService)
     {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.dateUtils = dateUtils;
+        this.bvnLookupService = bvnLookupService;
+
+    }
+
+    @Override
+    public SignUpResponse createUserWithBvn(ValidateBvnRequest validateBvnRequest) throws IOException {
+       // return null;
+        BvnLookupServiceResponse bvnLookupServiceResponse = bvnLookupService.bvnLookup(validateBvnRequest.getBvn());
+        if(bvnLookupServiceResponse != null)
+        {
+            //Map bvnLookupServiceResponse to SignUpRequest pojo and send to user
+        }
+        return null;
     }
     @Override
     @Transactional
+    // Create User without BVN
     public SignUpResponse createUser(SignUpRequest user) {
             //alternate course of action, validate bvn and use that to fetch fields to register user;
         // Validate bvn
@@ -119,6 +134,7 @@ public class UserServiceImpl implements UserService {
 
             return signUpResponse;
     }
+
     @Override
     @Transactional
     public User editUser(UpdateUserRequest user, String loggedOnUser) throws UserNotFoundException, ApplicationException {

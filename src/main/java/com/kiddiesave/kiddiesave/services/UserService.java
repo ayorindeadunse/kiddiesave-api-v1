@@ -3,13 +3,17 @@ package com.kiddiesave.kiddiesave.services;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.SignUpRequest;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.SignUpResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.UpdateUserRequest;
+import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidateBvnRequest;
 import com.kiddiesave.kiddiesave.entity.User;
 import com.kiddiesave.kiddiesave.exceptions.ApplicationException;
 import com.kiddiesave.kiddiesave.exceptions.UserNotFoundException;
 
+import java.io.IOException;
+
 
 public interface UserService {
     SignUpResponse createUser(SignUpRequest user);
+    SignUpResponse createUserWithBvn(ValidateBvnRequest validateBvnRequest) throws IOException;
     User editUser(UpdateUserRequest user, String loggedOnUser) throws UserNotFoundException, ApplicationException;
     String deleteUser(String userEmail) throws UserNotFoundException, ApplicationException;
     Long getUsersCount(Boolean status);

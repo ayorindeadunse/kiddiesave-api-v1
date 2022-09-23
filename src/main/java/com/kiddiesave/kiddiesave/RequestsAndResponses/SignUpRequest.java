@@ -16,6 +16,7 @@ public class SignUpRequest {
     private String password;
     @NotNull(message="bvn is required")
     @NotBlank(message="bvn cannot be blank")
+    @Size(min = 11,message = "BVN should have 11 numbers.")
     private String bvn;
     @NotNull(message="First name is required")
     @NotBlank(message="First name cannot be blank")
