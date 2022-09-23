@@ -14,12 +14,9 @@ import com.kiddiesave.kiddiesave.security.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
