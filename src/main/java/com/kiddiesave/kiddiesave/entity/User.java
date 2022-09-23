@@ -49,7 +49,6 @@ public class User {
     private Boolean isPhoneValidated; // update after phone is validated
     private Boolean isPushNotifications; // set push notifications to false unless explicitly set by user in edit endpoint
     private Boolean isEmailValidated; // update to true after success call to Email Validation endpoint
-    private String NotificationId; // set to false unless explicitly updated by user after calling the edit endpoint
     private Boolean status;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -297,14 +296,6 @@ public class User {
 
     public void setPushNotifications(boolean pushNotifications) {
         isPushNotifications = pushNotifications;
-    }
-
-    public String getNotificationId() {
-        return NotificationId;
-    }
-
-    public void setNotificationId(String notificationId) {
-        NotificationId = notificationId;
     }
 
     public boolean isStatus() {
