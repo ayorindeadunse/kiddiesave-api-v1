@@ -13,7 +13,6 @@ import java.io.IOException;
 
 public interface UserService {
     SignUpResponse createUser(SignUpRequest user);
-    SignUpResponse createUserWithBvn(ValidateBvnRequest validateBvnRequest) throws IOException;
     User editUser(UpdateUserRequest user, String loggedOnUser) throws UserNotFoundException, ApplicationException;
     String deleteUser(String userEmail) throws UserNotFoundException, ApplicationException;
     Long getUsersCount(Boolean status);

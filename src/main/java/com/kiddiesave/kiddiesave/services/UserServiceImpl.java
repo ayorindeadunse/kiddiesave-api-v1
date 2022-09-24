@@ -48,16 +48,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SignUpResponse createUserWithBvn(ValidateBvnRequest validateBvnRequest) throws IOException {
-       // return null;
-        BvnLookupServiceResponse bvnLookupServiceResponse = bvnLookupService.bvnLookup(validateBvnRequest.getBvn());
-        if(bvnLookupServiceResponse != null)
-        {
-            //Map bvnLookupServiceResponse to SignUpRequest pojo and send to user
-        }
-        return null;
-    }
-    @Override
     @Transactional
     // Create User without BVN
     public SignUpResponse createUser(SignUpRequest user) {
