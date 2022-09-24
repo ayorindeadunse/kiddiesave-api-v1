@@ -100,7 +100,8 @@ public class ValidateEmailServiceImpl implements ValidateEmailService{
             User user = userRepository.getUserByEmail(userEmail);
             if(user != null)
             {
-                //update user status
+                //update user status and email validation status
+                user.setStatus(true);
                 user.setEmailValidated(true);
                 userRepository.save(user);
                 //  delete record from email_validation_data table

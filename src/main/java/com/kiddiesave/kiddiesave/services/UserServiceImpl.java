@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
             newUser.setRoles(roles);
             newUser.setDateCreated(new Date());
             newUser.setDateUpdated(new Date());
-            newUser.setBvnValidated(false); // remember bvn validation check
+            newUser.setBvnValidated(true); // since after BVN lookup is successful the enpoint to create the user follows
             newUser.setPhoneValidated(false); // phone validation check
             newUser.setPushNotifications(false); // enable to true in edit
             newUser.setStatus(false); // set to true after user has been email validated and bvn validated(see below)
