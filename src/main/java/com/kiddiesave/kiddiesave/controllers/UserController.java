@@ -11,6 +11,7 @@ import com.kiddiesave.kiddiesave.services.ValidateEmailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,13 @@ public class UserController {
         this.validateEmailService = validateEmailService;
     }
 /* TODO: Research integration with Wallets Africa to create a wallet for the registered user. */
+
+    @PostMapping("/registerdependent")
+    @PreAuthorize("hasRole('KIDDIESAVE_PARENT')")
+    public ResponseEntity<?> registerDependent()
+    {
+        return null;
+    }
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws MessagingException {
 
