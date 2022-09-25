@@ -23,7 +23,9 @@ public class Wallet {
 
     private WalletType walletType;
     private boolean status;
-    private String password;
+    private String passwordHash;
+    private String passwordSalt;
+    private String customerId;
     private String accountNumber;
     private String minimumBalance;
     private String accountName;
@@ -34,7 +36,9 @@ public class Wallet {
     private Date lockedOutDate;
     private boolean lockedOutEnabled;
     private int tierType;
+    private boolean isMigrated;
     private Date dateCreated;
     private Date dateUpdated;
+    private String oldAccountNumber;
 
 }
