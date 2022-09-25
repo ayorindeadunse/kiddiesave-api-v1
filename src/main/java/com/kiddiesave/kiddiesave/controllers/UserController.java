@@ -33,7 +33,7 @@ public class UserController {
         this.claims = claims;
         this.validateEmailService = validateEmailService;
     }
-/* TODO: Add validation for registerUserAndWallet  */
+/* TODO: Research integration with Wallets Africa to create a wallet for the registered user. */
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signupRequest) throws MessagingException {
 

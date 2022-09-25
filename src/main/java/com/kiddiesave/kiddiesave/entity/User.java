@@ -51,7 +51,7 @@ public class User {
     private Boolean isEmailValidated; // update to true after success call to Email Validation endpoint
     private Boolean status;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
