@@ -47,16 +47,16 @@ public class ValidationController {
             return null;
     }
 
-    @GetMapping("/validateemail/{email}/{requestId}")
-    public ResponseEntity<?> validateUserEmail(@PathVariable  @Email(message="Please pass a valid e-mail address") String email, @PathVariable String requestId)
+    @GetMapping("/validateemail/{email}/{requestid}")
+    public ResponseEntity<?> validateUserEmail(@PathVariable  @Email(message="Please pass a valid e-mail address") String email, @PathVariable String requestid)
     {
         //validate e-mail and requestId
-        if(email == null || requestId == null)
+        if(email == null || requestid == null)
         {
             return new ResponseEntity(new ApiResponse(false, "Email and request ID are required", HttpStatus.BAD_REQUEST),
                     HttpStatus.BAD_REQUEST);
         }
-        String response = validateEmailService.validateUserEmail(email,requestId);
+        String response = validateEmailService.validateUserEmail(email,requestid);
         if(response.equalsIgnoreCase("User email successfully validated. Please login to the app."))
             return ResponseEntity.ok(new ApiResponse(true, response,null));
         return null;
