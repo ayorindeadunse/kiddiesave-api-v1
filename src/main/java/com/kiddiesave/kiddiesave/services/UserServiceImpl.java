@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final DateUtils dateUtils;
-    private final BvnLookupServiceImpl bvnLookupService;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
@@ -43,7 +42,6 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.dateUtils = dateUtils;
-        this.bvnLookupService = bvnLookupService;
 
     }
 
