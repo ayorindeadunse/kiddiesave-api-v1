@@ -16,4 +16,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     User getUserByBvn(String bvn);
     User getUserByPhoneNumberLinkedWithBvn(String phoneNumberLinkedWithBvn);
 
+    // Change methods to return Optional to take care of null values
+
 }

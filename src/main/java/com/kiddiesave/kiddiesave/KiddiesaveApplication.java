@@ -57,6 +57,6 @@ public class KiddiesaveApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//load up Roles in db at app startup
+		/**load up Roles in db at app startup*/
 	}
 }
