@@ -17,7 +17,7 @@ import java.util.Properties;
 @Configuration
 @EntityScan("com.kiddiesave.Kiddiesave.entity") // path of the entity model
 @EnableJpaRepositories("com.kiddiesave.kiddiesave.repository") //path  of jpa repository
-public class KiddiesaveApplication implements CommandLineRunner {
+public class KiddiesaveApplication {
 	@Value("${spring.mail.host}")
 	private String host;
 	@Value("${spring.mail.port}")
@@ -55,8 +55,4 @@ public class KiddiesaveApplication implements CommandLineRunner {
 		SpringApplication.run(KiddiesaveApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		/**load up Roles in db at app startup*/
-	}
 }
