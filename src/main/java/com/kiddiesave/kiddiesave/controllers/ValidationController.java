@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import java.io.IOException;
 
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @Validated
 @RequestMapping("/api/validation")
