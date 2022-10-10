@@ -1,38 +1,33 @@
 package com.kiddiesave.kiddiesave;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-
-import java.util.Properties;
 
 @SpringBootApplication
+@ComponentScan
 @Configuration
 @EntityScan("com.kiddiesave.Kiddiesave.entity") // path of the entity model
 @EnableJpaRepositories("com.kiddiesave.kiddiesave.repository") //path  of jpa repository
 public class KiddiesaveApplication {
-	@Value("${spring.mail.host}")
+	/*@Value("${spring.mail.host}")
 	private String host;
 	@Value("${spring.mail.port}")
 	private String port;
 	@Value("${spring.mail.username}")
 	private String username;
 	@Value("${spring.mail.password}")
-	private String password;
+	private String password;*/
 
 	//private Environment env;
 
 	public KiddiesaveApplication() {
 	}
 
-	public JavaMailSender getMailSender()
+	/*public JavaMailSender getMailSender()
 	{
 		// java mail inmplementation
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -50,7 +45,7 @@ public class KiddiesaveApplication {
 
 		mailSender.setJavaMailProperties(javaMailProperties);
 		return mailSender;
-	}
+	}*/
 	public static void main(String[] args) {
 		SpringApplication.run(KiddiesaveApplication.class, args);
 	}
