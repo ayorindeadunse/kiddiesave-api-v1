@@ -15,9 +15,7 @@ import javax.validation.constraints.NotNull;
 @ToString
 public class ValidateOTPRequest {
     @NotNull(message="Pin ID cannot be null")
-    @NotBlank(message="Pin Id cannot be blank")
     private String pinId;
     @NotNull(message="Code cannot be null")
-    @NotBlank(message="Code cannot be blank")
     private String code;
 }

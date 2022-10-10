@@ -17,10 +17,8 @@ import java.util.Date;
 public class ValidateEmailRequest {
     @Email(message="Email is invalid")
     @NotNull(message="Email cannot be null")
-    @NotBlank(message="Email cannot be blank")
     public String email;
     @NotNull(message="Request Id cannot be null")
-    @NotBlank(message="Request Id cannot be blank")
     public String requestId;
     public Date dateCreated;
 }

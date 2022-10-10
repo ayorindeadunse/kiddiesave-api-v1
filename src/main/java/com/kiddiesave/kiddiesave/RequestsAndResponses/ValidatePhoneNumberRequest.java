@@ -9,7 +9,6 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class ValidatePhoneNumberRequest {
-    @NotBlank(message="Phone cannot be blank")
     @NotNull(message="Phone cannot be null")
     @Size(min = 13,message = "The minimum length of the mobile number should be 13 characters.")
     private String phone;

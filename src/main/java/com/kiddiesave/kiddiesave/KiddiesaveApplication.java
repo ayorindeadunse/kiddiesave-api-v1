@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan
+@ComponentScan(basePackages = "com.kiddiesave.kiddiesave.*")
 @Configuration
-@EntityScan("com.kiddiesave.Kiddiesave.entity") // path of the entity model
+@EntityScan("com.kiddiesave.kiddiesave.entity") // path of the entity model
 @EnableJpaRepositories("com.kiddiesave.kiddiesave.repository") //path  of jpa repository
 public class KiddiesaveApplication {
 	/*@Value("${spring.mail.host}")
