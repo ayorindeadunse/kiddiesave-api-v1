@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception // Method to configure your app security settings
     {
 
-        http.csrf().disable().headers().frameOptions().deny().and() //disabling csrf
+        http.csrf().disable().headers().frameOptions().disable().and() //disabling csrf
                 .cors() //enabling cors
                 .and()
                 .authorizeHttpRequests() //authorize incoming http requests
