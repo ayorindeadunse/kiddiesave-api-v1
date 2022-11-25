@@ -4,10 +4,12 @@ import com.google.gson.*;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.BvnLookupServiceResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidateOTPResponse;
 import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumberResponse;
+import com.kiddiesave.kiddiesave.security.util.LocalDateAdapter;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,6 @@ import java.time.format.DateTimeFormatter;
 // test implementation
 @Service
 public class ValidationServiceRestImpl implements ValidationServiceRest{
-
     @Value("${SmsOtpUrl}")
     private String smsOtpUrl;
     @Value("${SmsOtpVerify}")
@@ -38,7 +39,14 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
     @Value("${MonoTestSecKey}")
     private String monoSecretKey;
 
-            public ValidatePhoneNumberResponse sendOTPCode(String phoneNumber) throws UnirestException {
+    private final LocalDateAdapter localDateAdapter;
+
+    @Autowired
+    public ValidationServiceRestImpl(LocalDateAdapter localDateAdapter) {
+        this.localDateAdapter = localDateAdapter;
+    }
+
+    public ValidatePhoneNumberResponse sendOTPCode(String phoneNumber) throws UnirestException {
 
                 Unirest.setTimeouts(0, 0);
                 HttpResponse<String> response = Unirest.post(smsOtpUrl)
@@ -48,7 +56,7 @@ public class ValidationServiceRestImpl implements ValidationServiceRest{
 
         //deserialize string response back to json
                 Gson gson = new GsonBuilder()
-                        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                        .registerTypeAdapter(LocalDate.class, localDateAdapter)
                         .create();
 
                 ValidatePhoneNumberResponse otpResponse = gson.fromJson(String.valueOf(response.getBody()), ValidatePhoneNumberResponse.class);
@@ -65,7 +73,7 @@ return otpResponse;
                 .asString();
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .registerTypeAdapter(LocalDate.class, localDateAdapter)
                 .create();
 
         ValidateOTPResponse validResponse = gson.fromJson(String.valueOf(response.getBody()),ValidateOTPResponse.class);
@@ -95,10 +103,10 @@ return otpResponse;
         return bvnLookupServiceResponse;
     }
 }
-
-class LocalDateAdapter implements JsonSerializer<LocalDate> {
+// move this to utility class
+/*class LocalDateAdapter implements JsonSerializer<LocalDate> {
 
     public JsonElement serialize(LocalDate date, Type typeOfSrc, JsonSerializationContext context) {
         return new JsonPrimitive(date.format(DateTimeFormatter.ISO_LOCAL_DATE)); // "yyyy-mm-dd"
     }
-}
+}*/
