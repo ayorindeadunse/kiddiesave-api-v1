@@ -96,7 +96,7 @@ return otpResponse;
         Response response = client.newCall(request).execute();
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .registerTypeAdapter(LocalDate.class, localDateAdapter)
                 .create();
 
         BvnLookupServiceResponse bvnLookupServiceResponse = gson.fromJson((response.body().string()), BvnLookupServiceResponse.class);
