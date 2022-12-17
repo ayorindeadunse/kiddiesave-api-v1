@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 import java.util.Date;
 import java.util.List;
 
@@ -32,40 +31,12 @@ public class CreateWalletResponse {
     private String meta_data;
     private Boolean allow_fund;
     private Boolean allow_fund_transfer;
-    /*"wallet_id": "637fb336bd97535242302452",
-        "customer_email": "adunses3@gmail.com",
-        "customer_phone": "",
-        "created_at": "2022-11-24T18:08:54.791131248Z",
-        "updated_at": "2022-11-24T18:08:54.791131317Z",
-        "deleted_at": "0001-01-01T00:00:00Z",
-        "status": "active",
-        "environment": "test",
-        "organization_id": "63578d6198bf7dc2408bc227",
-        "currency": "NGN",
-        "balance": 0,
-        "deleted": false,
-        "balances": [
-            {
-                "currency": "NGN",
-                "balance": 0
-            },
-            {
-                "currency": "USD",
-                "balance": 0
-            }
-        ],
-        "allow_withdraw": true,
-        "locked": false,
-        "meta_data": null,
-        "allow_fund": true,
-        "allow_wallet_transfer": true,
-        "allow_bank_transfer": true*/
 }
 
 class BalanceInfo
 {
     public String currency;
-    public long balance;
+    public int balance;
 
     public String getCurrency() {
         return currency;
@@ -79,7 +50,7 @@ class BalanceInfo
         return balance;
     }
 
-    public void setBalance(long balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 }
