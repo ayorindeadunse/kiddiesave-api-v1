@@ -1,22 +1,17 @@
 package com.kiddiesave.kiddiesave.services;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.kiddiesave.kiddiesave.RequestsAndResponses.CreateWalletResponse;
-import com.kiddiesave.kiddiesave.RequestsAndResponses.ValidatePhoneNumberResponse;
 import com.kiddiesave.kiddiesave.security.util.LocalDateAdapter;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
+
+@Service
 public class WalletServiceRestImpl implements WalletServiceRest{
 
     @Value("${get_wallets_secret_key}")
